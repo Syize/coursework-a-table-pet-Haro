@@ -1,4 +1,3 @@
-
 #include "haro.h"
 #include <QApplication>
 

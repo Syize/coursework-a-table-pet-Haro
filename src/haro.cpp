@@ -1,4 +1,5 @@
 #include "haro.h"
+#include "resources.h"
 #include "ui_haro.h"
 
 Haro::Haro(QWidget *parent)
@@ -6,57 +7,70 @@ Haro::Haro(QWidget *parent)
     , ui(new Ui::Haro)
 {
     ui->setupUi(this);
+    this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody(Body::Body))));
+    this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar(Ear::Ear))));
+    this->ui->eyeImage->setPixmap(QPixmap(QString()))
+    // this->setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
+    // QPalette palette = QPalette();
+    // palette.setColor(QPalette::Window, QColor(0x00, 0xFF, 0x00, 0x00));
+    // this->setPalette(palette);
+    // make window stay on top and hide window frame based on system
+    #ifdef _WIN32
+        // On Windows we need to set Qt::Tool so this app won't show in Windows' taskbar
+        this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    #else
+        // On Linux we need to set Qt::X11BypassWindowManagerHint so this app won't show in taskbar
+        // Note if you want to use this app on wayland, you need to install x11-wayland and set env QT_QPA_PLATFORM="xcb" to force qt use X11 backend
+        // this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+    #endif
+    // Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
+    // setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
 
-    setWindowFlags(Qt::FramelessWindowHint|Qt::Tool);//去掉窗口标题
-    setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
-    Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
-    setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
+    // int coordX,coordY;//桌面坐标
+    // QFile file("/home/syize/Documents/C++/coursework-a-table-pet-Haro/res/file/file.dat");
+    // file.open(QIODevice::ReadOnly);
+    // QDataStream in(&file);
+    // if(file.isOpen())//读取体型、装扮编号参数、相对桌面坐标
+    //     in>>size>>bodyNum>>earsNum>>coordX>>coordY;
+    // else{
+    //     size = 400;
+    //     bodyNum = 0;
+    //     earsNum = 0;
+    //     coordX = x();
+    //     coordY = y();
+    // }
+    // file.close();
+    // move(coordX,coordY);
 
-    int coordX,coordY;//桌面坐标
-    QFile file("./file/file.dat");
-    file.open(QIODevice::ReadOnly);
-    QDataStream in(&file);
-    if(file.isOpen())//读取体型、装扮编号参数、相对桌面坐标
-        in>>size>>bodyNum>>earsNum>>coordX>>coordY;
-    else{
-        size = 400;
-        bodyNum = 0;
-        earsNum = 0;
-        coordX = x();
-        coordY = y();
-    }
-    file.close();
-    move(coordX,coordY);
-
-    timer = new QTimer;
-    timer->start(40);//动画速度
-    connect(timer,&QTimer::timeout,this,&Haro::eyesMovement);//关联眼部动作
+    // timer = new QTimer;
+    // timer->start(40);//动画速度
+    // connect(timer,&QTimer::timeout,this,&Haro::eyesMovement);//关联眼部动作
 
 
-    imageLoad();//载入部位图片
-    eyesMovementLoad();//载入表情图片
-    specialMovementLoad();//载入特殊动作图片
+    // imageLoad();//载入部位图片
+    // eyesMovementLoad();//载入表情图片
+    // specialMovementLoad();//载入特殊动作图片
 
-    bodyImage = new QLabel(this);//身体图片指针
-    eyesImage = new QLabel(this);//眼部图片指针
-    stripeImage = new QLabel(this);//屏幕遮盖条纹图片指针
-    earsImage = new QLabel(this);//耳朵图片指针
+    // bodyImage = new QLabel(this);//身体图片指针
+    // eyesImage = new QLabel(this);//眼部图片指针
+    // stripeImage = new QLabel(this);//屏幕遮盖条纹图片指针
+    // earsImage = new QLabel(this);//耳朵图片指针
 
-    imageSet(bodyImage,body[bodyNum]);
+    // imageSet(bodyImage,body[bodyNum]);
 
-    imageSet(eyesImage,eyes);
+    // imageSet(eyesImage,eyes);
 
-    if(size>140){
-        imageSet(stripeImage,stripe);
-        stripeImage->show();
-    }
-    else
-        stripeImage->hide();
+    // if(size>140){
+    //     imageSet(stripeImage,stripe);
+    //     stripeImage->show();
+    // }
+    // else
+    //     stripeImage->hide();
 
-    imageSet(earsImage,ears1[earsNum]);
+    // imageSet(earsImage,ears1[earsNum]);
 
-    initBtn();//初始化按钮
-    initSystemTray();//初始化系统托盘
+    // initBtn();//初始化按钮
+    // initSystemTray();//初始化系统托盘
 }
 
 Haro::~Haro()
@@ -582,7 +596,7 @@ void Haro::specialMovement(){
 
 void Haro::saveData()
 {
-    QFile file("./file/file.dat");
+    QFile file("/home/syize/Documents/C++/coursework-a-table-pet-Haro/res/file/file.dat");
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
     out<<size<<bodyNum<<earsNum<<x()<<y();//存储体型、装扮编号参数、窗口坐标

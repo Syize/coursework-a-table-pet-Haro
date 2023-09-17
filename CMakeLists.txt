@@ -16,7 +16,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Mul
 # other library
 set(EXTERNAL_LIBS "")
 
-include_directories(src/include)
+include_directories(AFTER src/include)
 
 set(PROJECT_SOURCES
         main.cpp
