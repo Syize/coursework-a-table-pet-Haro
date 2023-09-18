@@ -98,7 +98,7 @@ public:
 
     void reInitBtn();//修改大小时再次初始化按钮
 
-    void initSystemTray();//初始化系统托盘
+    // void initSystemTray();//初始化系统托盘
 
     void closeBtnPush();//点击关闭按钮事件
 
@@ -116,7 +116,7 @@ public:
 
     void calenBtnPush();//点击日历按钮事件
 
-    void systemTrayPush();//点击系统托盘事件
+    void onSystemTrayIconActivate();//点击系统托盘事件
 
     void btnSwitchRole();//根据btnSwitch切换按钮状态
 

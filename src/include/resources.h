@@ -67,4 +67,29 @@ namespace Stripe
     char* getStripe(StripeName index);
 } // namespace Stripe
 
+namespace HaroIcon
+{
+    // chose icon by enum
+    enum IconName
+    {
+        Add = 0,
+        Calendar,
+        Choose,
+        Close,
+        Dress,
+        Game,
+        Icon,
+        Last,
+        Min,
+        More,
+        Music,
+        Next,
+        Pause,
+        Play,
+        Setting
+    };
+
+    char* getIcon(IconName index);
+}
+
 #endif

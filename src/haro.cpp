@@ -233,16 +233,16 @@ void Haro::reInitBtn()
 
 }
 
-void Haro::initSystemTray()
-{
+// void Haro::initSystemTray()
+// {
 
-    pSystemTray = new QSystemTrayIcon(this);
-    pSystemTray->setIcon(QIcon(":/images/icon/haro_icon.ico"));
-    pSystemTray->setToolTip("Hello, I'm Haro.");
-    pSystemTray->show();
-    connect(pSystemTray,&QSystemTrayIcon::activated,this,&Haro::systemTrayPush);
+//     pSystemTray = new QSystemTrayIcon(this);
+//     pSystemTray->setIcon(QIcon(":/images/icon/haro_icon.ico"));
+//     pSystemTray->setToolTip("Hello, I'm Haro.");
+//     pSystemTray->show();
+//     connect(pSystemTray,&QSystemTrayIcon::activated,this,&Haro::onSystemTrayIconActivate);
 
-}
+// }
 
 void Haro::closeBtnPush()
 {
@@ -372,11 +372,17 @@ void Haro::calenBtnPush()
         calenWindow->hide();
 }
 
-void Haro::systemTrayPush()
+void Haro::onSystemTrayIconActivate()
 {
-
     if(this->isHidden())
+    {
         this->show();
+    }
+    else
+    {
+        this->hide();
+    }
+    
 
 }
 

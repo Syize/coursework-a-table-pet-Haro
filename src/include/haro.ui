@@ -33,7 +33,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../../res.qrc">:/res/images/appearance/body/def_body.png</pixmap>
+     <pixmap resource="../../res.qrc">:/body/res/images/appearance/body/def_body.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -55,7 +55,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../../res.qrc">:/res/images/appearance/eyes/def_eyes.png</pixmap>
+     <pixmap resource="../../res.qrc">:/eye/res/images/appearance/eyes/def_eyes.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -77,7 +77,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../../res.qrc">:/res/images/appearance/stripe.png</pixmap>
+     <pixmap resource="../../res.qrc">:/stripe/res/images/appearance/stripe.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -99,7 +99,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../../res.qrc">:/res/images/appearance/ears/def_ears1.png</pixmap>
+     <pixmap resource="../../res.qrc">:/ear/res/images/appearance/ears/def_ears1.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
