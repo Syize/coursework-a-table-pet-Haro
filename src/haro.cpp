@@ -1,6 +1,7 @@
 #include "haro.h"
 #include "resources.h"
 #include "ui_haro.h"
+#include <iostream>
 
 Haro::Haro(QWidget *parent)
     : QMainWindow(parent)
@@ -44,8 +45,8 @@ Haro::Haro(QWidget *parent)
     // timer->start(40);//动画速度
     // connect(timer,&QTimer::timeout,this,&Haro::eyesMovement);//关联眼部动作
 
-
-    // imageLoad();//载入部位图片
+    // this->size = 400;
+    imageLoad();//载入部位图片
     // eyesMovementLoad();//载入表情图片
     // specialMovementLoad();//载入特殊动作图片
 
@@ -109,92 +110,92 @@ void Haro::imageSet(QLabel *image,QPixmap map)
 void Haro::imageLoad()
 {
     //载入装扮图片
-    body.push_back(QPixmap(QString(":/images/appearance/body/def_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/blue_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/pink_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/icefire_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/cat_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/Gundam_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/drill_body.png")));
-    body.push_back(QPixmap(QString(":/images/appearance/body/angel_body.png")));
+    body.push_back(QPixmap(QString(Body::getBody(Body::Body))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::BlueBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::PinkBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::IceFireBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::CatBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::GundamBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::DrillBody))));
+    body.push_back(QPixmap(QString(Body::getBody(Body::AngelBody))));
 
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/def_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/blue_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/pink_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/icefire_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/cat_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/Gundam_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/drill_ears1.png")));
-    ears1.push_back(QPixmap(QString(":/images/appearance/ears/angel_ears1.png")));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::Ear))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::BlueEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::PinkEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::IceFireEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::CatEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::GundamEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::DrillEar))));
+    ears1.push_back(QPixmap(QString(Ear::getEar(Ear::AngelEar))));
 
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/def_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/blue_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/pink_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/icefire_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/cat_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/Gundam_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/drill_ears2.png")));
-    ears2.push_back(QPixmap(QString(":/images/appearance/ears/angel_ears2.png")));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::Ear2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::BlueEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::PinkEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::IceFireEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::CatEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::GundamEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::DrillEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::AngelEar2))));
 
-    eyes.load(":/images/appearance/eyes/def_eyes.png");
-    stripe.load(":/images/appearance/stripe.png");
+    eyes.load(Eye::getEye(Eye::Eye));
+    stripe.load(Stripe::getStripe(Stripe::Stripe));
 }
 
 void Haro::initBtn()
 {
-    closeBtn = new QPushButton(this);//关闭按钮
-    dressBtn = new QPushButton(this);//换装按钮
-    moreBtn = new QPushButton(this);//展开更多按钮
-    minBtn = new QPushButton(this);//最小化按钮
-    setBtn = new QPushButton(this);//设置按钮
-    musicBtn = new QPushButton(this);//音乐按钮
-    gameBtn = new QPushButton(this);//游戏按钮
-    calenBtn = new QPushButton(this);//日历按钮
+    // closeBtn = new QPushButton(this);//关闭按钮
+    // dressBtn = new QPushButton(this);//换装按钮
+    // moreBtn = new QPushButton(this);//展开更多按钮
+    // minBtn = new QPushButton(this);//最小化按钮
+    // setBtn = new QPushButton(this);//设置按钮
+    // musicBtn = new QPushButton(this);//音乐按钮
+    // gameBtn = new QPushButton(this);//游戏按钮
+    // calenBtn = new QPushButton(this);//日历按钮
 
-    closeBtn->setIcon(QIcon(":/images/icon/close.png"));
-    dressBtn->setIcon(QIcon(":/images/icon/dress.png"));
-    moreBtn->setIcon(QIcon(":/images/icon/more.png"));
-    minBtn->setIcon(QIcon(":/images/icon/min.png"));
-    setBtn->setIcon(QIcon(":/images/icon/setting.png"));
-    musicBtn->setIcon(QIcon(":/images/icon/music.png"));
-    gameBtn->setIcon(QIcon(":/images/icon/game.png"));
-    calenBtn->setIcon(QIcon(":/images/icon/calendar.png"));
+    // closeBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Close))));
+    // dressBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Dress))));
+    // moreBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::More))));
+    // minBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Min))));
+    // setBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Setting))));
+    // musicBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Music))));
+    // gameBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Game))));
+    // calenBtn->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Calendar))));
 
-    reInitBtn();
+    // reInitBtn();
 
-    //设置按钮样式
-    setStyleSheet("QPushButton{border:4px solid black;"
-                  "background-color:rgb(200,210,255);border-radius: 10px;}"
-                  "QPushButton::hover{background-color:rgb(170,200,255);}"
-                  "QPushButton:pressed{background-color:rgb(60,70,200);}");
+    // //设置按钮样式
+    // setStyleSheet("QPushButton{border:4px solid black;"
+    //               "background-color:rgb(200,210,255);border-radius: 10px;}"
+    //               "QPushButton::hover{background-color:rgb(170,200,255);}"
+    //               "QPushButton:pressed{background-color:rgb(60,70,200);}");
 
-    dressWindow = new DressWin;//换装窗口
-    dressWindow->accept(body,ears1,bodyNum,earsNum);
+    // dressWindow = new DressWin;//换装窗口
+    // dressWindow->accept(body,ears1,bodyNum,earsNum);
 
-    setWindow =  new SetWin;//设置窗口
-    setWindow->setSize(size);//为设置窗口传入size参数
+    // setWindow =  new SetWin;//设置窗口
+    // setWindow->setSize(size);//为设置窗口传入size参数
 
-    musicWindow = new MusicWin;//音乐窗口
+    // musicWindow = new MusicWin;//音乐窗口
 
-    calenWindow = new QCalendarWidget;//日历窗口
-    calenWindow->setWindowFlags(Qt::FramelessWindowHint);//隐藏窗口标题栏
-    calenWindow->setWindowIcon(QIcon(":/images/icon/calendar.png")); //设置窗口图标
-    calenWindow->resize(600,400);
+    // calenWindow = new QCalendarWidget;//日历窗口
+    // calenWindow->setWindowFlags(Qt::FramelessWindowHint);//隐藏窗口标题栏
+    // calenWindow->setWindowIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Calendar)))); //设置窗口图标
+    // calenWindow->resize(600,400);
 
 
-    //连接按钮信号与对应槽函数
-    connect(closeBtn,&QPushButton::clicked,this,&Haro::closeBtnPush);
-    connect(dressBtn,&QPushButton::clicked,this,&Haro::dressBtnPush);
-    connect(moreBtn,&QPushButton::clicked,this,&Haro::moreBtnPush);
-    connect(minBtn,&QPushButton::clicked,this,&Haro::minBtnPush);
-    connect(setBtn,&QPushButton::clicked,this,&Haro::setBtnPush);
-    connect(musicBtn,&QPushButton::clicked,this,&Haro::musicBtnPush);
-    connect(gameBtn,&QPushButton::clicked,this,&Haro::gameBtnPush);
-    connect(calenBtn,&QPushButton::clicked,this,&Haro::calenBtnPush);
+    // //连接按钮信号与对应槽函数
+    // connect(closeBtn,&QPushButton::clicked,this,&Haro::closeBtnPush);
+    // connect(dressBtn,&QPushButton::clicked,this,&Haro::dressBtnPush);
+    // connect(moreBtn,&QPushButton::clicked,this,&Haro::moreBtnPush);
+    // connect(minBtn,&QPushButton::clicked,this,&Haro::minBtnPush);
+    // connect(setBtn,&QPushButton::clicked,this,&Haro::setBtnPush);
+    // connect(musicBtn,&QPushButton::clicked,this,&Haro::musicBtnPush);
+    // // connect(gameBtn,&QPushButton::clicked,this,&Haro::gameBtnPush);
+    // connect(calenBtn,&QPushButton::clicked,this,&Haro::calenBtnPush);
 
-    btnSwitch_1 = 0;//初始化按钮显示
-    btnSwitch_2 = 0;
-    btnSwitchRole();
+    // btnSwitch_1 = 0;//初始化按钮显示
+    // btnSwitch_2 = 0;
+    // btnSwitchRole();
 }
 
 void Haro::reInitBtn()
@@ -212,16 +213,25 @@ void Haro::reInitBtn()
     int btnHeight = btnSize/8;
 
     closeBtn->setGeometry(btnX,btnY,btnWidth,btnHeight);
+    std::cout << "close button: " << btnX << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
     dressBtn->setGeometry(btnX,btnY + btnSize/6,btnWidth,btnHeight);
+    std::cout << "dress button: " << btnX << ", " << btnY + btnSize / 6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     moreBtn->setGeometry(btnX,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    std::cout << "more button: " << btnX << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     minBtn->setGeometry(btnX,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    std::cout << "min button: " << btnX << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
 
     setBtn->setGeometry(btnX - btnWidth*1.2,btnY,btnWidth,btnHeight);
+    std::cout << "setting button: " << btnX-btnWidth*1.2 << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
     musicBtn->setGeometry(btnX - btnWidth*1.2,btnY + btnSize/6,btnWidth,btnHeight);
+    std::cout << "music button: " << btnX-btnWidth*1.2 << ", " << btnY+btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     gameBtn->setGeometry(btnX - btnWidth*1.2,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    std::cout << "game button: " << btnX-btnWidth*1.2 << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     calenBtn->setGeometry(btnX - btnWidth*1.2,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    std::cout << "calendar button: " << btnX-btnWidth*1.2 << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     //图标大小
     QSize temp(btnSize/8,btnSize/8);
+    std::cout << "Icon size: " << btnSize/8 << ", " << btnSize/8 << std::endl;
     closeBtn->setIconSize(temp);
     dressBtn->setIconSize(temp);
     moreBtn->setIconSize(temp);

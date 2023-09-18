@@ -108,10 +108,226 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="closeButton">
+    <property name="geometry">
+     <rect>
+      <x>355</x>
+      <y>400</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/close.png</normaloff>:/icon/res/images/icon/close.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dressButton">
+    <property name="geometry">
+     <rect>
+      <x>355</x>
+      <y>466</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/dress.png</normaloff>:/icon/res/images/icon/dress.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="moreButton">
+    <property name="geometry">
+     <rect>
+      <x>355</x>
+      <y>533</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/more.png</normaloff>:/icon/res/images/icon/more.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="minButton">
+    <property name="geometry">
+     <rect>
+      <x>355</x>
+      <y>600</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/min.png</normaloff>:/icon/res/images/icon/min.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="settingButton">
+    <property name="geometry">
+     <rect>
+      <x>259</x>
+      <y>400</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/setting.png</normaloff>:/icon/res/images/icon/setting.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="musicButton">
+    <property name="geometry">
+     <rect>
+      <x>259</x>
+      <y>466</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/music.png</normaloff>:/icon/res/images/icon/music.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="gameButton">
+    <property name="geometry">
+     <rect>
+      <x>259</x>
+      <y>533</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/game.png</normaloff>:/icon/res/images/icon/game.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="calendarButton">
+    <property name="geometry">
+     <rect>
+      <x>259</x>
+      <y>600</y>
+      <width>80</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border:4px solid black;background-color:rgb(200,210,255);border-radius: 10px;}QPushButton::hover{background-color:rgb(170,200,255);}QPushButton:pressed{background-color:rgb(60,70,200);}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../res.qrc">
+      <normaloff>:/icon/res/images/icon/calendar.png</normaloff>:/icon/res/images/icon/calendar.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
    <zorder>bodyImage</zorder>
    <zorder>eyeImage</zorder>
    <zorder>earImage</zorder>
    <zorder>stripeImage</zorder>
+   <zorder>closeButton</zorder>
+   <zorder>dressButton</zorder>
+   <zorder>moreButton</zorder>
+   <zorder>minButton</zorder>
+   <zorder>settingButton</zorder>
+   <zorder>musicButton</zorder>
+   <zorder>gameButton</zorder>
+   <zorder>calendarButton</zorder>
   </widget>
  </widget>
  <resources>

@@ -1,12 +1,13 @@
 #include "dresswin.h"
 #include "ui_dresswin.h"
+#include "resources.h"
 
-DressWin::DressWin(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DressWin)
+DressWin::DressWin(QWidget *parent)
+        : QWidget(parent)
+        , ui(new Ui::DressWin)
 {
 
-    ui->setupUi(this);
+    this->ui->setupUi(this);
 
     QBitmap bmp(this->size());//设置圆角边框
     bmp.fill();
@@ -21,7 +22,7 @@ DressWin::DressWin(QWidget *parent) :
     Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
     setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
 
-    this->setWindowIcon(QIcon(":/images/icon/dress.png")); //设置窗口图标
+    this->setWindowIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Dress)))); //设置窗口图标
 
     y=0;
     num=NUM;
@@ -46,7 +47,7 @@ DressWin::~DressWin()
 
 void DressWin::paintEvent(QPaintEvent *)
 {
-    static QPixmap dummy(":/images/appearance/body/dummy.png");
+    static QPixmap dummy(QString(Body::getBody(Body::Dummy)));
     QPainter painter(this);
 
     for(int i = 0;i<num;i++)
@@ -116,14 +117,14 @@ void DressWin::initBtn()
         bodyBtn[i] = new QPushButton(this);
         bodyBtn[i]->setFixedSize(80,40);
         bodyBtn[i]->move(80,y+i*230+210);
-        bodyBtn[i]->setIcon(QIcon(":/images/icon/choose.png"));
+        bodyBtn[i]->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Choose))));
         bodyBtn[i]->setCheckable(1);
         bodyBox->addButton(bodyBtn[i],i);
 
         earsBtn[i] = new QPushButton(this);
         earsBtn[i]->setFixedSize(80,40);
         earsBtn[i]->move(280,y+i*230+210);
-        earsBtn[i]->setIcon(QIcon(":/images/icon/choose.png"));
+        earsBtn[i]->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Choose))));
         earsBtn[i]->setCheckable(1);
         earsBox->addButton(earsBtn[i],i);
     }

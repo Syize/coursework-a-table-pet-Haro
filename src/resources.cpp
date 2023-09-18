@@ -29,6 +29,8 @@ char* Body::getBody(Body::BodyName index)
     case AngelBody:
         return ":/body/res/images/appearance/body/angel_body.png";
         break;
+    case Dummy:
+        return ":/body/res/images/appearance/body/dummy.png";
     default:
         throw "Invalid index";
         break;

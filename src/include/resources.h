@@ -13,7 +13,8 @@ namespace Body
         CatBody,
         GundamBody,
         DrillBody,
-        AngelBody
+        AngelBody,
+        Dummy
     };
 
     char* getBody(BodyName index);
