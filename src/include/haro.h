@@ -2,21 +2,21 @@
 #define HARO_H
 
 #include <QMainWindow>
-#include<QMouseEvent>
-#include<QtGlobal>
+#include <QMouseEvent>
+#include <QtGlobal>
 #include <QLabel>
-#include<QPoint>
-#include<QTimer>
-#include<QPushButton>
-#include<QCalendarWidget>
-#include<QFile>
-#include<QDataStream>
+#include <QPoint>
+#include <QTimer>
+#include <QPushButton>
+#include <QCalendarWidget>
+#include <QFile>
+#include <QDataStream>
 
-#include<QSystemTrayIcon>
+#include <QSystemTrayIcon>
 
-#include"dresswin.h"
-#include"setwin.h"
-#include"musicwin.h"
+#include "dresswin.h"
+#include "setwin.h"
+#include "musicwin.h"
 
 using namespace std;
 
@@ -37,8 +37,8 @@ private:
     MusicWin *musicWindow;//音乐窗口页面指针
 
     QCalendarWidget *calenWindow;//日历窗口指针
-
-    QPoint moveLeftTop;//坐标点
+    // record mouse position
+    QPoint mousePosition;
 
     vector<QPixmap> movement;//表情图片容器
 

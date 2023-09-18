@@ -51,6 +51,7 @@ else()
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
+    qt5_add_resources(QRC_FILES ${QRC_SOURCES})
         add_executable(haro
             ${PROJECT_SOURCES}
             ${INCLUDE_SOURCES}

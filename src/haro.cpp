@@ -6,14 +6,12 @@ Haro::Haro(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Haro)
 {
-    ui->setupUi(this);
-    this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody(Body::Body))));
-    this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar(Ear::Ear))));
-    this->ui->eyeImage->setPixmap(QPixmap(QString()))
-    // this->setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
-    // QPalette palette = QPalette();
-    // palette.setColor(QPalette::Window, QColor(0x00, 0xFF, 0x00, 0x00));
-    // this->setPalette(palette);
+
+    this->ui->setupUi(this);
+    this->setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
+    QPalette palette = QPalette();
+    palette.setColor(QPalette::Window, QColor(0x00, 0xFF, 0x00, 0x00));
+    this->setPalette(palette);
     // make window stay on top and hide window frame based on system
     #ifdef _WIN32
         // On Windows we need to set Qt::Tool so this app won't show in Windows' taskbar
@@ -21,7 +19,7 @@ Haro::Haro(QWidget *parent)
     #else
         // On Linux we need to set Qt::X11BypassWindowManagerHint so this app won't show in taskbar
         // Note if you want to use this app on wayland, you need to install x11-wayland and set env QT_QPA_PLATFORM="xcb" to force qt use X11 backend
-        // this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+        this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
     #endif
     // Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
     // setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
@@ -409,56 +407,63 @@ void Haro::btnSwitchRole()
 
 void Haro::mouseMoveEvent(QMouseEvent *event)
 {
-
-    if(event->buttons() & Qt::LeftButton)//鼠标左键按下并移动时，实现拖动窗口
+    // move window
+    if(event->buttons() & Qt::LeftButton)
     {
-        this->move(event->globalPos()-moveLeftTop);
-        dressWindow->move(x()+frameGeometry().width()/2-10
-                          -btnSize*0.6-dressWindow->frameGeometry().width(),
-                          y()+frameGeometry().height()/2-150
-                          -dressWindow->frameGeometry().height()/2);
+        this->move(event->globalPos() - this->mousePosition);
+        // dressWindow->move(x()+frameGeometry().width()/2-10
+        //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
+        //                   y()+frameGeometry().height()/2-150
+        //                   -dressWindow->frameGeometry().height()/2);
 
-        musicWindow->move(x()+frameGeometry().width()/2
-        -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-musicWindow->frameGeometry().width(),
-        y()+frameGeometry().height()/2-size/5
-        -musicWindow->frameGeometry().height()/2);
+        // musicWindow->move(x()+frameGeometry().width()/2
+        // -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-musicWindow->frameGeometry().width(),
+        // y()+frameGeometry().height()/2-size/5
+        // -musicWindow->frameGeometry().height()/2);
 
-        calenWindow->move(x()+frameGeometry().width()/2
-        -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
-        y()+frameGeometry().height()/2-size/5
-        -calenWindow->frameGeometry().height()/2);
-        saveData();
+        // calenWindow->move(x()+frameGeometry().width()/2
+        // -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
+        // y()+frameGeometry().height()/2-size/5
+        // -calenWindow->frameGeometry().height()/2);
+        // saveData();
     }
 }
 
 void Haro::mousePressEvent(QMouseEvent *event)
 {
-    static int flag = 0;//触发特殊动作的计数变量
-    if(event->button() == Qt::LeftButton){//鼠标左键事件
-    moveLeftTop = event->pos();
-    if(face<0&&spMove<0){//随机播放表情
-        face = qrand()%(faceSum-1)+1;
-        flag++;
-        if(flag==10){//触发蓝屏
-            flag = 0;
-            spMove = 0;
-            face = -1;
-        }
+    // static int flag = 0;//触发特殊动作的计数变量
+    if(event->button() == Qt::LeftButton)
+    {
+        // mouse left button event
+        this->mousePosition = event->pos();
+    // if(face<0&&spMove<0){//随机播放表情
+    //     face = qrand()%(faceSum-1)+1;
+    //     flag++;
+    //     if(flag==10){//触发蓝屏
+    //         flag = 0;
+    //         spMove = 0;
+    //         face = -1;
+    //     }
+    // }
     }
- }
- else if(event->button() == Qt::RightButton){//鼠标右键事件
-     if(btnSwitch_1){//隐藏按钮
-         btnSwitch_1=0;
-         btnSwitch_2=0;
-     }
-     else
-         btnSwitch_1=1;//显示按钮
+    // else if(event->button() == Qt::RightButton)
+    // {
+    //     // mouse right button event
+    //     if(btnSwitch_1)
+    //     {
+    //         // hide button
+    //         btnSwitch_1=0;
+    //         btnSwitch_2=0;
+    //     }
+    //     else
+    //     {
+    //         // display button
+    //         btnSwitch_1=1;
+    //     }
 
-   dressWindow->hide();
-    btnSwitchRole();
- }
-
-
+    //     dressWindow->hide();
+    //     btnSwitchRole();
+    // }
 }
 
 void Haro::eyesMovementLoad()
