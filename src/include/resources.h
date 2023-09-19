@@ -14,8 +14,11 @@ namespace Body
         GundamBody,
         DrillBody,
         AngelBody,
-        Dummy
+        Dummy = 99
     };
+
+    // body number except `Dummy`
+    const int BodyNum = 8;
 
     char* getBody(BodyName index);
 }
@@ -32,8 +35,8 @@ namespace Ear
         CatEar,
         GundamEar,
         DrillEar,
-        Ear2,
         AngelEar,
+        Ear2,
         BlueEar2,
         PinkEar2,
         IceFireEar2,
@@ -42,6 +45,9 @@ namespace Ear
         DrillEar2,
         AngelEar2
     };
+
+    // Ear number except Ear followed by 2
+    const int EarNum = 8;
 
     char* getEar(EarName index);
 }

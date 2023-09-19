@@ -73,6 +73,8 @@ public:
 
     void initWindow();
 
+    void bindSlots();
+
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 
     void mousePressEvent(QMouseEvent *event);//鼠标点击事件-虚函数
@@ -117,6 +119,9 @@ public:
 
     void saveData();//存储数据
 
+public slots:
+    void bodyChangeSlots(int);
+    void earChangeSlots(int);
 };
 
 

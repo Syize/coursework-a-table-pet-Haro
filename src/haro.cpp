@@ -71,6 +71,10 @@ Haro::Haro(QWidget *parent)
     // imageSet(earsImage,ears1[earsNum]);
 
     initBtn();//初始化按钮
+    this->initWindow();
+
+    // bind slots to signals
+    this->bindSlots();
     // initSystemTray();//初始化系统托盘
 }
 
@@ -131,7 +135,31 @@ void Haro::imageLoad()
 
 void Haro::initWindow()
 {
+    // reload Haro so it will looks better
+    this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody(Body::Body))).scaled(this->ui->bodyImage->size()));
+    this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar(Ear::Ear))).scaled(this->ui->earImage->size()));
+    this->ui->eyeImage->setPixmap(QPixmap(QString(Eye::getEye(Eye::Eye))).scaled(this->ui->eyeImage->size()));
+    this->ui->stripeImage->setPixmap(QPixmap(QString(Stripe::getStripe(Stripe::Stripe))).scaled(this->ui->stripeImage->size()));
 
+    // init all other windows
+    this->dressWindow = new DressWin;
+}
+
+void Haro::bindSlots()
+{
+    QObject::connect(this->ui->dressButton,&QPushButton::clicked,this,&Haro::dressBtnPush);
+    QObject::connect(this->dressWindow, &DressWin::bodyChangeSignal, this, &Haro::bodyChangeSlots);
+    QObject::connect(this->dressWindow, &DressWin::earChangeSignal, this, &Haro::earChangeSlots);
+}
+
+void Haro::bodyChangeSlots(int index)
+{
+    this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody((enum Body::BodyName)index))).scaled(this->ui->bodyImage->size()));
+}
+
+void Haro::earChangeSlots(int index)
+{
+    this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar((enum Ear::EarName)index))).scaled(this->ui->earImage->size()));
 }
 
 void Haro::initBtn()
@@ -162,8 +190,8 @@ void Haro::initBtn()
     //               "QPushButton::hover{background-color:rgb(170,200,255);}"
     //               "QPushButton:pressed{background-color:rgb(60,70,200);}");
 
-    dressWindow = new DressWin;//换装窗口
-    dressWindow->accept(body,ears1,bodyNum,earsNum);
+    // dressWindow = new DressWin;//换装窗口
+    // dressWindow->accept(body,ears1,bodyNum,earsNum);
 
     // setWindow =  new SetWin;//设置窗口
     // setWindow->setSize(size);//为设置窗口传入size参数
@@ -178,7 +206,7 @@ void Haro::initBtn()
 
     // //连接按钮信号与对应槽函数
     // connect(closeBtn,&QPushButton::clicked,this,&Haro::closeBtnPush);
-    connect(this->ui->dressButton,&QPushButton::clicked,this,&Haro::dressBtnPush);
+    // connect(this->ui->dressButton,&QPushButton::clicked,this,&Haro::dressBtnPush);
     // connect(moreBtn,&QPushButton::clicked,this,&Haro::moreBtnPush);
     // connect(minBtn,&QPushButton::clicked,this,&Haro::minBtnPush);
     // connect(setBtn,&QPushButton::clicked,this,&Haro::setBtnPush);
@@ -271,7 +299,7 @@ void Haro::dressBtnPush()
         // setWindow->hide();
         // musicWindow->hide();
         btnSwitch_2=0;
-        btnSwitchRole();
+        // btnSwitchRole();
     }
     else
         dressWindow->hide();
@@ -543,18 +571,18 @@ void Haro::eyesMovement()
             this->ui->eyeImage->setPixmap(eyes.scaled(size,size));
         }
     }
-    if(!dressWindow->isHidden()){//从换装窗口中获取bodyNum、earsNum参数
-        if(bodyNum!=dressWindow->getBodyNum()){
-            bodyNum = dressWindow->getBodyNum();
-            this->ui->bodyImage->setPixmap(body[bodyNum].scaled(size,size));
-            saveData();
-        }
-        if(earsNum!=dressWindow->getEarsNum()){
-            earsNum = dressWindow->getEarsNum();
-            this->ui->bodyImage->setPixmap(ears1[earsNum].scaled(size,size));
-            saveData();
-        }
-    }
+    // if(!dressWindow->isHidden()){//从换装窗口中获取bodyNum、earsNum参数
+    //     if(bodyNum!=dressWindow->getBodyNum()){
+    //         bodyNum = dressWindow->getBodyNum();
+    //         this->ui->bodyImage->setPixmap(body[bodyNum].scaled(size,size));
+    //         saveData();
+    //     }
+    //     if(earsNum!=dressWindow->getEarsNum()){
+    //         earsNum = dressWindow->getEarsNum();
+    //         this->ui->bodyImage->setPixmap(ears1[earsNum].scaled(size,size));
+    //         saveData();
+    //     }
+    // }
 
     if(!setWindow->isHidden()){//从设置窗口中获取size参数
         if(size!=setWindow->getSize()){
