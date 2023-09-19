@@ -46,6 +46,8 @@ Haro::Haro(QWidget *parent)
     // connect(timer,&QTimer::timeout,this,&Haro::eyesMovement);//关联眼部动作
 
     // this->size = 400;
+    this->bodyNum = 0;
+    this->earsNum = 0;
     imageLoad();//载入部位图片
     // eyesMovementLoad();//载入表情图片
     // specialMovementLoad();//载入特殊动作图片
@@ -68,7 +70,7 @@ Haro::Haro(QWidget *parent)
 
     // imageSet(earsImage,ears1[earsNum]);
 
-    // initBtn();//初始化按钮
+    initBtn();//初始化按钮
     // initSystemTray();//初始化系统托盘
 }
 
@@ -76,20 +78,6 @@ Haro::~Haro()
 {
     //清理各类指针申请的空间
     delete ui;
-
-    delete earsImage;
-    delete bodyImage;
-    delete eyesImage;
-    delete stripeImage;
-
-    delete closeBtn;
-    delete dressBtn;
-    delete moreBtn;
-    delete minBtn;
-    delete setBtn;
-    delete musicBtn;
-    delete gameBtn;
-    delete calenBtn;
 
     delete dressWindow;
     delete setWindow;
@@ -141,6 +129,11 @@ void Haro::imageLoad()
     stripe.load(Stripe::getStripe(Stripe::Stripe));
 }
 
+void Haro::initWindow()
+{
+
+}
+
 void Haro::initBtn()
 {
     // closeBtn = new QPushButton(this);//关闭按钮
@@ -169,8 +162,8 @@ void Haro::initBtn()
     //               "QPushButton::hover{background-color:rgb(170,200,255);}"
     //               "QPushButton:pressed{background-color:rgb(60,70,200);}");
 
-    // dressWindow = new DressWin;//换装窗口
-    // dressWindow->accept(body,ears1,bodyNum,earsNum);
+    dressWindow = new DressWin;//换装窗口
+    dressWindow->accept(body,ears1,bodyNum,earsNum);
 
     // setWindow =  new SetWin;//设置窗口
     // setWindow->setSize(size);//为设置窗口传入size参数
@@ -185,7 +178,7 @@ void Haro::initBtn()
 
     // //连接按钮信号与对应槽函数
     // connect(closeBtn,&QPushButton::clicked,this,&Haro::closeBtnPush);
-    // connect(dressBtn,&QPushButton::clicked,this,&Haro::dressBtnPush);
+    connect(this->ui->dressButton,&QPushButton::clicked,this,&Haro::dressBtnPush);
     // connect(moreBtn,&QPushButton::clicked,this,&Haro::moreBtnPush);
     // connect(minBtn,&QPushButton::clicked,this,&Haro::minBtnPush);
     // connect(setBtn,&QPushButton::clicked,this,&Haro::setBtnPush);
@@ -212,34 +205,34 @@ void Haro::reInitBtn()
     int btnWidth = btnSize/5;
     int btnHeight = btnSize/8;
 
-    closeBtn->setGeometry(btnX,btnY,btnWidth,btnHeight);
-    std::cout << "close button: " << btnX << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
-    dressBtn->setGeometry(btnX,btnY + btnSize/6,btnWidth,btnHeight);
-    std::cout << "dress button: " << btnX << ", " << btnY + btnSize / 6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    moreBtn->setGeometry(btnX,btnY + 2*btnSize/6,btnWidth,btnHeight);
-    std::cout << "more button: " << btnX << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    minBtn->setGeometry(btnX,btnY + 3*btnSize/6,btnWidth,btnHeight);
-    std::cout << "min button: " << btnX << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->closeButton->setGeometry(btnX,btnY,btnWidth,btnHeight);
+    // std::cout << "close button: " << btnX << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->dressButton->setGeometry(btnX,btnY + btnSize/6,btnWidth,btnHeight);
+    // std::cout << "dress button: " << btnX << ", " << btnY + btnSize / 6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->moreButton->setGeometry(btnX,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    // std::cout << "more button: " << btnX << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->minButton->setGeometry(btnX,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    // std::cout << "min button: " << btnX << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
 
-    setBtn->setGeometry(btnX - btnWidth*1.2,btnY,btnWidth,btnHeight);
-    std::cout << "setting button: " << btnX-btnWidth*1.2 << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
-    musicBtn->setGeometry(btnX - btnWidth*1.2,btnY + btnSize/6,btnWidth,btnHeight);
-    std::cout << "music button: " << btnX-btnWidth*1.2 << ", " << btnY+btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    gameBtn->setGeometry(btnX - btnWidth*1.2,btnY + 2*btnSize/6,btnWidth,btnHeight);
-    std::cout << "game button: " << btnX-btnWidth*1.2 << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    calenBtn->setGeometry(btnX - btnWidth*1.2,btnY + 3*btnSize/6,btnWidth,btnHeight);
-    std::cout << "calendar button: " << btnX-btnWidth*1.2 << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->settingButton->setGeometry(btnX - btnWidth*1.2,btnY,btnWidth,btnHeight);
+    // std::cout << "setting button: " << btnX-btnWidth*1.2 << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->musicButton->setGeometry(btnX - btnWidth*1.2,btnY + btnSize/6,btnWidth,btnHeight);
+    // std::cout << "music button: " << btnX-btnWidth*1.2 << ", " << btnY+btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->gameButton->setGeometry(btnX - btnWidth*1.2,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    // std::cout << "game button: " << btnX-btnWidth*1.2 << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    this->ui->calendarButton->setGeometry(btnX - btnWidth*1.2,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    // std::cout << "calendar button: " << btnX-btnWidth*1.2 << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     //图标大小
-    QSize temp(btnSize/8,btnSize/8);
-    std::cout << "Icon size: " << btnSize/8 << ", " << btnSize/8 << std::endl;
-    closeBtn->setIconSize(temp);
-    dressBtn->setIconSize(temp);
-    moreBtn->setIconSize(temp);
-    minBtn->setIconSize(temp);
-    setBtn->setIconSize(temp);
-    musicBtn->setIconSize(temp);
-    gameBtn->setIconSize(temp);
-    calenBtn->setIconSize(temp);
+    // QSize temp(btnSize/8,btnSize/8);
+    // std::cout << "Icon size: " << btnSize/8 << ", " << btnSize/8 << std::endl;
+    // this->ui->closeButton->setIconSize(temp);
+    // dressBtn->setIconSize(temp);
+    // moreBtn->setIconSize(temp);
+    // minBtn->setIconSize(temp);
+    // setBtn->setIconSize(temp);
+    // musicBtn->setIconSize(temp);
+    // gameBtn->setIconSize(temp);
+    // calenBtn->setIconSize(temp);
 
 }
 
@@ -254,13 +247,13 @@ void Haro::reInitBtn()
 
 // }
 
-void Haro::closeBtnPush()
+void Haro::onCloseButtonClicked()
 {
 
-   dressWindow->close();
-   setWindow->close();
-   musicWindow->close();
-   calenWindow->close();
+   this->dressWindow->close();
+   this->setWindow->close();
+   this->musicWindow->close();
+   this->calenWindow->close();
 
    this->close();
 
@@ -274,9 +267,9 @@ void Haro::dressBtnPush()
                           y()+frameGeometry().height()/2-150
                           -dressWindow->frameGeometry().height()/2);
         dressWindow->show();
-        calenWindow->hide();
-        setWindow->hide();
-        musicWindow->hide();
+        // calenWindow->hide();
+        // setWindow->hide();
+        // musicWindow->hide();
         btnSwitch_2=0;
         btnSwitchRole();
     }
@@ -399,24 +392,24 @@ void Haro::onSystemTrayIconActivate()
 void Haro::btnSwitchRole()
 {
     //根据btnSwitch调整按钮是否显示
-    closeBtn->setVisible(btnSwitch_1);
-    dressBtn->setVisible(btnSwitch_1);
-    moreBtn->setVisible(btnSwitch_1);
-    minBtn->setVisible(btnSwitch_1);
-    setBtn->setVisible(btnSwitch_2);
-    musicBtn->setVisible(btnSwitch_2);
-    gameBtn->setVisible(btnSwitch_2);
-    calenBtn->setVisible(btnSwitch_2); 
+    this->ui->closeButton->setVisible(btnSwitch_1);
+    this->ui->dressButton->setVisible(btnSwitch_1);
+    this->ui->moreButton->setVisible(btnSwitch_1);
+    this->ui->minButton->setVisible(btnSwitch_1);
+    this->ui->settingButton->setVisible(btnSwitch_2);
+    this->ui->musicButton->setVisible(btnSwitch_2);
+    this->ui->gameButton->setVisible(btnSwitch_2);
+    this->ui->calendarButton->setVisible(btnSwitch_2); 
     //移动窗口坐标↓
-    musicWindow->move(x()+frameGeometry().width()/2
-    -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-musicWindow->frameGeometry().width(),
-    y()+frameGeometry().height()/2-size/5
-    -musicWindow->frameGeometry().height()/2);
-    //移动窗口坐标↓
-    calenWindow->move(x()+frameGeometry().width()/2
-    -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
-    y()+frameGeometry().height()/2-size/5
-    -calenWindow->frameGeometry().height()/2);
+    // musicWindow->move(x()+frameGeometry().width()/2
+    // -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-musicWindow->frameGeometry().width(),
+    // y()+frameGeometry().height()/2-size/5
+    // -musicWindow->frameGeometry().height()/2);
+    // //移动窗口坐标↓
+    // calenWindow->move(x()+frameGeometry().width()/2
+    // -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
+    // y()+frameGeometry().height()/2-size/5
+    // -calenWindow->frameGeometry().height()/2);
 
 
 }
@@ -524,12 +517,12 @@ void Haro::eyesMovement()
 
     second2++;//控制耳朵的动画
     if(second2>40 && earSwitch){
-        earsImage->setPixmap(ears2[earsNum].scaled(size,size));
+        this->ui->earImage->setPixmap(ears2[earsNum].scaled(size,size));
         earSwitch = 0;
         second2 = 0;
     }
     else if(second2>10 && !earSwitch){
-        earsImage->setPixmap(ears1[earsNum].scaled(size,size));
+        this->ui->earImage->setPixmap(ears1[earsNum].scaled(size,size));
         earSwitch = 1;
         second2 = 0;
     }
@@ -538,27 +531,27 @@ void Haro::eyesMovement()
     int num = faceNum[face*2],start = faceNum[face*2+1];
         flag++;
         if(flag<num)
-            eyesImage->setPixmap(
+            this->ui->eyeImage->setPixmap(
                         movement[start+flag].scaled(size,size));
         else
-            eyesImage->setPixmap(
+            this->ui->eyeImage->setPixmap(
                         movement[start-flag+(num-1)*2].scaled(size,size));
 
         if(flag>=(num-1)*2){
             flag = 0;
             face = -1;
-            eyesImage->setPixmap(eyes.scaled(size,size));
+            this->ui->eyeImage->setPixmap(eyes.scaled(size,size));
         }
     }
     if(!dressWindow->isHidden()){//从换装窗口中获取bodyNum、earsNum参数
         if(bodyNum!=dressWindow->getBodyNum()){
             bodyNum = dressWindow->getBodyNum();
-            bodyImage->setPixmap(body[bodyNum].scaled(size,size));
+            this->ui->bodyImage->setPixmap(body[bodyNum].scaled(size,size));
             saveData();
         }
         if(earsNum!=dressWindow->getEarsNum()){
             earsNum = dressWindow->getEarsNum();
-            earsImage->setPixmap(ears1[earsNum].scaled(size,size));
+            this->ui->bodyImage->setPixmap(ears1[earsNum].scaled(size,size));
             saveData();
         }
     }
@@ -567,15 +560,15 @@ void Haro::eyesMovement()
         if(size!=setWindow->getSize()){
             size = setWindow->getSize();
 
-            imageSet(bodyImage,body[bodyNum]);
-            imageSet(eyesImage,eyes);
+            imageSet(this->ui->bodyImage,body[bodyNum]);
+            imageSet(this->ui->eyeImage,eyes);
             if(size>140){
-                imageSet(stripeImage,stripe);
-                stripeImage->show();
+                imageSet(this->ui->stripeImage,stripe);
+                this->ui->stripeImage->show();
             }
             else
-                stripeImage->hide();
-            imageSet(earsImage,ears1[earsNum]);
+                this->ui->stripeImage->hide();
+            imageSet(this->ui->earImage,ears1[earsNum]);
 
             saveData();
             reInitBtn();
@@ -601,9 +594,9 @@ void Haro::specialMovement(){
 
     if(spMove == 0){//动作-error
         if(flag%20==0 && flag<=200)
-            eyesImage->setPixmap(spMovement[flag/20].scaled(size,size));
+            this->ui->eyeImage->setPixmap(spMovement[flag/20].scaled(size,size));
         else if(flag>300){
-            eyesImage->setPixmap(eyes.scaled(size,size));
+            this->ui->eyeImage->setPixmap(eyes.scaled(size,size));
             flag=0;
             spMove=-1;
             return ;

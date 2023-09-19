@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>1000</height>
+    <width>560</width>
+    <height>413</height>
    </rect>
   </property>
   <property name="cursor">
@@ -23,8 +23,8 @@
    <widget class="QLabel" name="bodyImage">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>300</y>
+      <x>145</x>
+      <y>4</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -45,8 +45,8 @@
    <widget class="QLabel" name="eyeImage">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>300</y>
+      <x>145</x>
+      <y>4</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -67,8 +67,8 @@
    <widget class="QLabel" name="stripeImage">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>300</y>
+      <x>145</x>
+      <y>4</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -89,8 +89,8 @@
    <widget class="QLabel" name="earImage">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>300</y>
+      <x>145</x>
+      <y>4</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -111,8 +111,8 @@
    <widget class="QPushButton" name="closeButton">
     <property name="geometry">
      <rect>
-      <x>355</x>
-      <y>400</y>
+      <x>100</x>
+      <y>104</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -137,8 +137,8 @@
    <widget class="QPushButton" name="dressButton">
     <property name="geometry">
      <rect>
-      <x>355</x>
-      <y>466</y>
+      <x>100</x>
+      <y>170</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -163,8 +163,8 @@
    <widget class="QPushButton" name="moreButton">
     <property name="geometry">
      <rect>
-      <x>355</x>
-      <y>533</y>
+      <x>100</x>
+      <y>237</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -189,8 +189,8 @@
    <widget class="QPushButton" name="minButton">
     <property name="geometry">
      <rect>
-      <x>355</x>
-      <y>600</y>
+      <x>100</x>
+      <y>304</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -215,8 +215,8 @@
    <widget class="QPushButton" name="settingButton">
     <property name="geometry">
      <rect>
-      <x>259</x>
-      <y>400</y>
+      <x>4</x>
+      <y>104</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -241,8 +241,8 @@
    <widget class="QPushButton" name="musicButton">
     <property name="geometry">
      <rect>
-      <x>259</x>
-      <y>466</y>
+      <x>4</x>
+      <y>170</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -267,8 +267,8 @@
    <widget class="QPushButton" name="gameButton">
     <property name="geometry">
      <rect>
-      <x>259</x>
-      <y>533</y>
+      <x>4</x>
+      <y>237</y>
       <width>80</width>
       <height>50</height>
      </rect>
@@ -293,8 +293,8 @@
    <widget class="QPushButton" name="calendarButton">
     <property name="geometry">
      <rect>
-      <x>259</x>
-      <y>600</y>
+      <x>4</x>
+      <y>304</y>
       <width>80</width>
       <height>50</height>
      </rect>

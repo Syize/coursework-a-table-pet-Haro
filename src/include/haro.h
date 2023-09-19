@@ -50,8 +50,6 @@ private:
 
     QPixmap eyes,stripe;//眼睛和眼部遮罩
 
-    QLabel *bodyImage,*earsImage,*eyesImage,*stripeImage;//各部件对应标签
-
     QTimer *timer;//定时器
 
     int size;//体型大小
@@ -68,19 +66,12 @@ private:
 
     int btnSwitch_1,btnSwitch_2;//菜单按钮显示开关
 
-    QPushButton *closeBtn;//关闭按钮
-    QPushButton *dressBtn;//换装按钮
-    QPushButton *moreBtn;//展开更多按钮
-    QPushButton *minBtn;//最小化按钮
-    QPushButton *setBtn;//设置按钮
-    QPushButton *musicBtn;//音乐按钮
-    QPushButton *gameBtn;//游戏按钮
-    QPushButton *calenBtn;//日历按钮
-
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:
     Haro(QWidget *parent = nullptr);
-    ~Haro();  
+    ~Haro();
+
+    void initWindow();
 
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 
@@ -100,7 +91,7 @@ public:
 
     // void initSystemTray();//初始化系统托盘
 
-    void closeBtnPush();//点击关闭按钮事件
+    void onCloseButtonClicked();//点击关闭按钮事件
 
     void dressBtnPush();//点击装扮按钮事件
 

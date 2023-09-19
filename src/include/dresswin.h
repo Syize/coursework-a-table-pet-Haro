@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QBitmap>
 #include <QPainter>
-#include<QWheelEvent>
-#include<QPushButton>
-#include<QButtonGroup>
+#include <QWheelEvent>
+#include <QPushButton>
+#include <QButtonGroup>
 
 using namespace std;
 
