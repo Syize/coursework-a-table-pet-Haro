@@ -65,15 +65,19 @@ private:
     int spMove;//特殊动作序号
 
     int btnSwitch_1,btnSwitch_2;//菜单按钮显示开关
+    // flag to hide or show button
+    int basicButtonSwitch = 0, moreButtonSwith = 0;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:
     Haro(QWidget *parent = nullptr);
     ~Haro();
-
+    // init window
     void initWindow();
-
+    // bind slots
     void bindSlots();
+    // hide or show button
+    void hideOrShowButton();
 
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 
@@ -95,11 +99,11 @@ public:
 
     void onCloseButtonClicked();//点击关闭按钮事件
 
-    void dressBtnPush();//点击装扮按钮事件
+    void onDressButtonClicked();//点击装扮按钮事件
 
-    void moreBtnPush();//点击最展开更多按钮事件
+    void onMoreButtonClicked();//点击最展开更多按钮事件
 
-    void minBtnPush();//点击最小化按钮事件
+    void onMinButtonClicked();//点击最小化按钮事件
 
     void setBtnPush();//点击设置按钮事件
 
@@ -122,6 +126,9 @@ public:
 public slots:
     void bodyChangeSlots(int);
     void earChangeSlots(int);
+
+signals:
+    void exitSignal();
 };
 
 

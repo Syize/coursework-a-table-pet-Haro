@@ -2,6 +2,7 @@
 #include "resources.h"
 #include "ui_haro.h"
 #include <iostream>
+#include <QApplication>
 
 Haro::Haro(QWidget *parent)
     : QMainWindow(parent)
@@ -143,11 +144,16 @@ void Haro::initWindow()
 
     // init all other windows
     this->dressWindow = new DressWin;
+
+    // hide button
+    this->hideOrShowButton();
 }
 
 void Haro::bindSlots()
 {
-    QObject::connect(this->ui->dressButton,&QPushButton::clicked,this,&Haro::dressBtnPush);
+    QObject::connect(this->ui->moreButton, &QPushButton::clicked, this, &Haro::onMoreButtonClicked);
+    QObject::connect(this->ui->dressButton, &QPushButton::clicked, this, &Haro::onDressButtonClicked);
+    QObject::connect(this->ui->closeButton, &QPushButton::clicked, this, &Haro::onCloseButtonClicked);
     QObject::connect(this->dressWindow, &DressWin::bodyChangeSignal, this, &Haro::bodyChangeSlots);
     QObject::connect(this->dressWindow, &DressWin::earChangeSignal, this, &Haro::earChangeSlots);
 }
@@ -160,6 +166,19 @@ void Haro::bodyChangeSlots(int index)
 void Haro::earChangeSlots(int index)
 {
     this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar((enum Ear::EarName)index))).scaled(this->ui->earImage->size()));
+}
+
+void Haro::hideOrShowButton()
+{
+    this->ui->closeButton->setVisible(this->basicButtonSwitch);
+    this->ui->dressButton->setVisible(this->basicButtonSwitch);
+    this->ui->moreButton->setVisible(this->basicButtonSwitch);
+    this->ui->minButton->setVisible(this->basicButtonSwitch);
+
+    this->ui->settingButton->setVisible(this->moreButtonSwith);
+    this->ui->musicButton->setVisible(this->moreButtonSwith);
+    this->ui->gameButton->setVisible(this->moreButtonSwith);
+    this->ui->calendarButton->setVisible(this->moreButtonSwith);
 }
 
 void Haro::initBtn()
@@ -278,16 +297,14 @@ void Haro::reInitBtn()
 void Haro::onCloseButtonClicked()
 {
 
-   this->dressWindow->close();
-   this->setWindow->close();
-   this->musicWindow->close();
-   this->calenWindow->close();
-
-   this->close();
-
+//    this->dressWindow->close();
+//    this->setWindow->close();
+//    this->musicWindow->close();
+//    this->calenWindow->close();
+    emit this->exitSignal();
 }
 
-void Haro::dressBtnPush()
+void Haro::onDressButtonClicked()
 {
     if(dressWindow->isHidden()){
         dressWindow->move(x()+frameGeometry().width()/2-10
@@ -305,18 +322,23 @@ void Haro::dressBtnPush()
         dressWindow->hide();
 }
 
-void Haro::moreBtnPush()
+void Haro::onMoreButtonClicked()
 {
-    if(btnSwitch_2==0)
-        btnSwitch_2=1;
+    if (this->moreButtonSwith == 0)
+    {
+        // show more button
+        this->moreButtonSwith = 1;
+        this->hideOrShowButton();
+    }
     else
-        btnSwitch_2=0;
-
-    btnSwitchRole();
-    dressWindow->hide();
+    {
+        // hide more button
+        this->moreButtonSwith = 0;
+        this->hideOrShowButton();
+    }
 }
 
-void Haro::minBtnPush()
+void Haro::onMinButtonClicked()
 {
     //this->setWindowState(Qt::WindowMinimized);//最小化窗口（已弃用）
     this->hide();
@@ -473,6 +495,10 @@ void Haro::mousePressEvent(QMouseEvent *event)
     {
         // mouse left button event
         this->mousePosition = event->pos();
+        // hide button
+        this->basicButtonSwitch = 0;
+        this->moreButtonSwith = 0;
+        this->hideOrShowButton();
     // if(face<0&&spMove<0){//随机播放表情
     //     face = qrand()%(faceSum-1)+1;
     //     flag++;
@@ -483,24 +509,21 @@ void Haro::mousePressEvent(QMouseEvent *event)
     //     }
     // }
     }
-    // else if(event->button() == Qt::RightButton)
-    // {
-    //     // mouse right button event
-    //     if(btnSwitch_1)
-    //     {
-    //         // hide button
-    //         btnSwitch_1=0;
-    //         btnSwitch_2=0;
-    //     }
-    //     else
-    //     {
-    //         // display button
-    //         btnSwitch_1=1;
-    //     }
-
-    //     dressWindow->hide();
-    //     btnSwitchRole();
-    // }
+    else if(event->button() == Qt::RightButton)
+    {
+        // hide or show basic button
+        if (this->basicButtonSwitch == 0)
+        {
+            this->basicButtonSwitch = 1;
+            this->hideOrShowButton();
+        }
+        else
+        {
+            this->basicButtonSwitch = 0;
+            this->moreButtonSwith = 0;
+            this->hideOrShowButton();
+        }
+    }
 }
 
 void Haro::eyesMovementLoad()

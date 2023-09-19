@@ -5,6 +5,7 @@
 #include <QIcon>
 #include <QMenu>
 #include <QAction>
+#include <QApplication>
 
 #include "resources.h"
 
@@ -14,11 +15,15 @@ class SystemTray : public QSystemTrayIcon
     Q_OBJECT
 
 public:
-    SystemTray(QObject *parent = nullptr);
+    SystemTray(QApplication *parent = nullptr);
+
+public slots:
+    void exitSlots();
 
 private:
     QMenu* menu;
     QAction* Quit;
+    QApplication* parent;
 };
 
 #endif

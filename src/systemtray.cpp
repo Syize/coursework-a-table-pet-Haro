@@ -5,8 +5,9 @@
 #include <QApplication>
 
 
-SystemTray::SystemTray(QObject *parent)
+SystemTray::SystemTray(QApplication *parent)
 {
+    this->parent = parent;
     // init icon
     this->setIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Icon))));
     this->setToolTip(tr("Hello, I'm Haro."));
@@ -23,4 +24,9 @@ SystemTray::SystemTray(QObject *parent)
     this->setContextMenu(this->menu);
 
     this->show();
+}
+
+void SystemTray::exitSlots()
+{
+    this->parent->exit();
 }
