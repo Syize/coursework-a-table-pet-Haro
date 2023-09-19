@@ -76,6 +76,11 @@ Haro::Haro(QWidget *parent)
 
     // bind slots to signals
     this->bindSlots();
+    // init timer
+    this->timer = new Timer();
+    this->timer->setSleepTime(1);
+    QObject::connect(this->timer, &Timer::atTime, this, &Haro::timerSlots);
+    this->timer->start();
     // initSystemTray();//初始化系统托盘
 }
 
@@ -166,6 +171,19 @@ void Haro::bodyChangeSlots(int index)
 void Haro::earChangeSlots(int index)
 {
     this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar((enum Ear::EarName)index))).scaled(this->ui->earImage->size()));
+}
+
+void Haro::timerSlots()
+{
+    // every call means one second has elapsed
+    if (this->exitSwitch >= 1)
+    {
+       emit this->exitSignal();
+    }
+    else if (this->exitSwitch >= 0)
+    {
+        this->exitSwitch ++;
+    }
 }
 
 void Haro::hideOrShowButton()
@@ -301,7 +319,11 @@ void Haro::onCloseButtonClicked()
 //    this->setWindow->close();
 //    this->musicWindow->close();
 //    this->calenWindow->close();
-    emit this->exitSignal();
+    this->ui->eyeImage->setPixmap(QPixmap(QString(Eye::getEye(Eye::ByeEye))).scaled(this->ui->eyeImage->size()));
+    if (this->exitSwitch < 0)
+    {
+        this->exitSwitch = 0;
+    }
 }
 
 void Haro::onDressButtonClicked()

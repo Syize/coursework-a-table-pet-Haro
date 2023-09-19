@@ -104,6 +104,9 @@ char* Eye::getEye(Eye::EyeName index)
     case Eye:
         return ":/eye/res/images/appearance/eyes/def_eyes.png";
         break;
+
+    case ByeEye:
+        return ":/eye/res/images/movement/bye.png";
     
     default:
         throw "Invalid index";

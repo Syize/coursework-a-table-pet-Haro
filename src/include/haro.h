@@ -17,6 +17,7 @@
 #include "dresswin.h"
 #include "setwin.h"
 #include "musicwin.h"
+#include "timer.h"
 
 using namespace std;
 
@@ -50,7 +51,7 @@ private:
 
     QPixmap eyes,stripe;//眼睛和眼部遮罩
 
-    QTimer *timer;//定时器
+    // QTimer *timer;//定时器
 
     int size;//体型大小
 
@@ -67,6 +68,8 @@ private:
     int btnSwitch_1,btnSwitch_2;//菜单按钮显示开关
     // flag to hide or show button
     int basicButtonSwitch = 0, moreButtonSwith = 0;
+    // flag to exit
+    int exitSwitch = -1;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:
@@ -78,6 +81,8 @@ public:
     void bindSlots();
     // hide or show button
     void hideOrShowButton();
+    // timer
+    Timer* timer;
 
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 
@@ -126,6 +131,7 @@ public:
 public slots:
     void bodyChangeSlots(int);
     void earChangeSlots(int);
+    void timerSlots();
 
 signals:
     void exitSignal();

@@ -30,6 +30,7 @@
     </qresource>
     <qresource prefix="/eye">
         <file>res/images/appearance/eyes/def_eyes.png</file>
+        <file>res/images/movement/bye.png</file>
     </qresource>
     <qresource prefix="/stripe">
         <file>res/images/appearance/stripe.png</file>

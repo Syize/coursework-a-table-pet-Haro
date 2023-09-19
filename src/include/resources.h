@@ -57,7 +57,8 @@ namespace Eye
     // chose eye picture by enum
     enum EyeName
     {
-        Eye = 0
+        Eye = 0,
+        ByeEye = 99
     };
 
     char* getEye(EyeName index);
