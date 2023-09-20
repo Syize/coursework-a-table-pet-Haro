@@ -147,7 +147,19 @@ void Haro::initWindow()
     this->ui->stripeImage->setPixmap(QPixmap(QString(Stripe::getStripe(Stripe::Stripe))).scaled(this->ui->stripeImage->size()));
 
     // init all other windows
+    // dresss window
     this->dressWindow = new DressWin;
+    // calendar window
+    this->calenWindow = new QCalendarWidget;
+    this->calenWindow->resize(600,400);
+    #ifdef _WIN32
+        // On Windows we need to set Qt::Tool so this app won't show in Windows' taskbar
+        this->calenWindow->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    #else
+        // On Linux we need to set Qt::X11BypassWindowManagerHint so this app won't show in taskbar
+        // Note if you want to use this app on wayland, you need to install x11-wayland and set env QT_QPA_PLATFORM="xcb" to force qt use X11 backend
+        this->calenWindow->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+    #endif
 
     // hide button
     this->hideOrShowButton();
@@ -155,6 +167,8 @@ void Haro::initWindow()
 
 void Haro::bindSlots()
 {
+    QObject::connect(this->ui->minButton, &QPushButton::clicked, this, &Haro::onMinButtonClicked);
+    QObject::connect(this->ui->calendarButton, &QPushButton::clicked, this, &Haro::onCalendarButtonClicked);
     QObject::connect(this->ui->moreButton, &QPushButton::clicked, this, &Haro::onMoreButtonClicked);
     QObject::connect(this->ui->dressButton, &QPushButton::clicked, this, &Haro::onDressButtonClicked);
     QObject::connect(this->ui->closeButton, &QPushButton::clicked, this, &Haro::onCloseButtonClicked);
@@ -374,13 +388,13 @@ void Haro::onCloseButtonClicked()
 void Haro::onDressButtonClicked()
 {
     if(dressWindow->isHidden()){
-        this->dressWindow->move(100, 100);
+        this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
         // dressWindow->move(x()+frameGeometry().width()/2-10
         //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
         //                   y()+frameGeometry().height()/2-150
         //                   -dressWindow->frameGeometry().height()/2);
         dressWindow->show();
-        // calenWindow->hide();
+        calenWindow->hide();
         // setWindow->hide();
         // musicWindow->hide();
         // btnSwitch_2=0;
@@ -397,12 +411,18 @@ void Haro::onMoreButtonClicked()
         // show more button
         this->moreButtonSwith = 1;
         this->hideOrShowButton();
+        // move other window
+        this->dressWindow->move(this->x() - this->dressWindow->width(), this->y());
+        this->calenWindow->move(this->x() - this->calenWindow->width(), this->y());
     }
     else
     {
         // hide more button
         this->moreButtonSwith = 0;
         this->hideOrShowButton();
+        // moveother window
+        this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
+        this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
     }
 }
 
@@ -412,13 +432,16 @@ void Haro::onMinButtonClicked()
     this->hide();
     dressWindow->hide();
     calenWindow->hide();
-    setWindow->hide();
-    musicWindow->hide();
+    // hide button two
+    this->basicButtonSwitch = 0;
+    this->moreButtonSwith = 0;
+    this->hideOrShowButton();
+    // setWindow->hide();
+    // musicWindow->hide();
 
-    btnSwitch_1=0;
-    btnSwitch_2=0;
-    btnSwitchRole();
-
+    // btnSwitch_1=0;
+    // btnSwitch_2=0;
+    // btnSwitchRole();
 }
 
 void Haro::setBtnPush()
@@ -476,18 +499,20 @@ void Haro::gameBtnPush()
     this->show();
 }
 
-void Haro::calenBtnPush()
+void Haro::onCalendarButtonClicked()
 {
     if(calenWindow->isHidden()){
         //移动窗口坐标↓
-        calenWindow->move(x()+frameGeometry().width()/2
-        -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
-        y()+frameGeometry().height()/2-size/5
-        -calenWindow->frameGeometry().height()/2);
+        // calenWindow->move(x()+frameGeometry().width()/2
+        // -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-calenWindow->frameGeometry().width(),
+        // y()+frameGeometry().height()/2-size/5
+        // -calenWindow->frameGeometry().height()/2);
+        this->calenWindow->move(this->x() - 600, this->y());
 
         calenWindow->show();
-        musicWindow->hide();
-        setWindow->hide();
+        this->dressWindow->hide();
+        // musicWindow->hide();
+        // setWindow->hide();
     }
     else
         calenWindow->hide();
@@ -538,6 +563,11 @@ void Haro::mouseMoveEvent(QMouseEvent *event)
     if(event->buttons() & Qt::LeftButton)
     {
         this->move(event->globalPos() - this->mousePosition);
+        // just a move, no need to show error ^_^
+        this->errorMovemntTriggerCount = 0;
+        // move other window simultaneously
+        this->dressWindow->move(this->x() - 470 + 180, this->y());
+        this->calenWindow->move(this->x() - 600 + 180, this->y());
         // dressWindow->move(x()+frameGeometry().width()/2-10
         //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
         //                   y()+frameGeometry().height()/2-150
@@ -599,14 +629,22 @@ void Haro::mousePressEvent(QMouseEvent *event)
         // hide or show basic button
         if (this->basicButtonSwitch == 0)
         {
+            // show basic button
             this->basicButtonSwitch = 1;
             this->hideOrShowButton();
+            // we need to move other window to left side of basic button
+            this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
+            this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
         }
         else
         {
+            // hide all button
             this->basicButtonSwitch = 0;
             this->moreButtonSwith = 0;
             this->hideOrShowButton();
+            // move other window to Haro's left side
+            this->dressWindow->move(this->x() - this->dressWindow->width() + 180, this->y());
+            this->calenWindow->move(this->x() - this->calenWindow->width() + 180, this->y());
         }
     }
 }

@@ -143,7 +143,7 @@ public:
 
     void gameBtnPush();//点击游戏按钮事件
 
-    void calenBtnPush();//点击日历按钮事件
+    void onCalendarButtonClicked();//点击日历按钮事件
 
     void onSystemTrayIconActivate();//点击系统托盘事件
 
