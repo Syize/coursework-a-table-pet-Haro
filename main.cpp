@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // create system tray
-    SystemTray systemTray = SystemTray(&a);
+    SystemTray systemTray(&a);
 
     Haro w;
 

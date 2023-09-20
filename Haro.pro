@@ -17,24 +17,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 QT += multimedia
 
-SOURCES += \
-    dresswin.cpp \
-    main.cpp \
-    haro.cpp \
-    musicwin.cpp \
-    setwin.cpp
+INCLUDEPATH += src/include
 
-HEADERS += \
-    dresswin.h \
-    haro.h \
-    musicwin.h \
-    setwin.h
+SOURCES += main.cpp
+SOURCES += src/dresswin.cpp \
+           src/haro.cpp \
+           src/musicwin.cpp \
+           src/resources.cpp \
+           src/setwin.cpp \
+           src/systemtray.cpp
 
-FORMS += \
-    dresswin.ui \
-    haro.ui \
-    musicwin.ui \
-    setwin.ui
+HEADERS += src/include/dresswin.h \
+           src/include/haro.h \
+           src/include/musicwin.h \
+           src/include/resources.h \
+           src/include/setwin.h \
+           src/include/systemtray.h
+
+FORMS += src/include/haro.ui \
+         src/include/dresswin.ui \
+         src/include/musicwin.ui \
+         src/include/setwin.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,12 +46,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
-
-DISTFILES += \
-    images/appearance/body/Gundam_body.png \
-    images/movement/blink/动作1.png \
-    images/movement/blink/动作2.png \
-    images/movement/blink/动作3.png \
-    images/movement/blink/动作4.png \
-    images/movement/blink/动作5.png \
-    images/movement/blink/动作6.png
