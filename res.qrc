@@ -87,6 +87,20 @@
         <file>res/images/movement/closeEyes/13.png</file>
         <file>res/images/movement/closeEyes/14.png</file>
         <file>res/images/movement/closeEyes/15.png</file>
+        <file>res/images/movement/closeEyes/16.png</file>
+        <file>res/images/movement/closeEyes/17.png</file>
+        <file>res/images/movement/closeEyes/18.png</file>
+        <file>res/images/movement/closeEyes/19.png</file>
+        <file>res/images/movement/closeEyes/20.png</file>
+        <file>res/images/movement/closeEyes/21.png</file>
+        <file>res/images/movement/closeEyes/22.png</file>
+        <file>res/images/movement/closeEyes/23.png</file>
+        <file>res/images/movement/closeEyes/24.png</file>
+        <file>res/images/movement/closeEyes/25.png</file>
+        <file>res/images/movement/closeEyes/26.png</file>
+        <file>res/images/movement/closeEyes/27.png</file>
+        <file>res/images/movement/closeEyes/28.png</file>
+        <file>res/images/movement/closeEyes/29.png</file>
     </qresource>
     <qresource prefix="/cruel">
         <file>res/images/movement/cruel/1.png</file>
@@ -127,6 +141,27 @@
         <file>res/images/movement/fly/20.png</file>
         <file>res/images/movement/fly/21.png</file>
         <file>res/images/movement/fly/22.png</file>
+        <file>res/images/movement/fly/23.png</file>
+        <file>res/images/movement/fly/24.png</file>
+        <file>res/images/movement/fly/25.png</file>
+        <file>res/images/movement/fly/26.png</file>
+        <file>res/images/movement/fly/27.png</file>
+        <file>res/images/movement/fly/28.png</file>
+        <file>res/images/movement/fly/29.png</file>
+        <file>res/images/movement/fly/30.png</file>
+        <file>res/images/movement/fly/31.png</file>
+        <file>res/images/movement/fly/32.png</file>
+        <file>res/images/movement/fly/33.png</file>
+        <file>res/images/movement/fly/34.png</file>
+        <file>res/images/movement/fly/35.png</file>
+        <file>res/images/movement/fly/36.png</file>
+        <file>res/images/movement/fly/37.png</file>
+        <file>res/images/movement/fly/38.png</file>
+        <file>res/images/movement/fly/39.png</file>
+        <file>res/images/movement/fly/40.png</file>
+        <file>res/images/movement/fly/41.png</file>
+        <file>res/images/movement/fly/42.png</file>
+        <file>res/images/movement/fly/43.png</file>
     </qresource>
     <qresource prefix="/hand">
         <file>res/images/movement/hand/1.png</file>
@@ -144,6 +179,17 @@
         <file>res/images/movement/heart/10.png</file>
         <file>res/images/movement/heart/11.png</file>
         <file>res/images/movement/heart/12.png</file>
+        <file>res/images/movement/heart/13.png</file>
+        <file>res/images/movement/heart/14.png</file>
+        <file>res/images/movement/heart/15.png</file>
+        <file>res/images/movement/heart/16.png</file>
+        <file>res/images/movement/heart/17.png</file>
+        <file>res/images/movement/heart/18.png</file>
+        <file>res/images/movement/heart/19.png</file>
+        <file>res/images/movement/heart/20.png</file>
+        <file>res/images/movement/heart/21.png</file>
+        <file>res/images/movement/heart/22.png</file>
+        <file>res/images/movement/heart/23.png</file>
     </qresource>
     <qresource prefix="/question">
         <file>res/images/movement/question/2.png</file>
@@ -162,6 +208,21 @@
         <file>res/images/movement/question/15.png</file>
         <file>res/images/movement/question/16.png</file>
         <file>res/images/movement/question/1.png</file>
+        <file>res/images/movement/question/17.png</file>
+        <file>res/images/movement/question/18.png</file>
+        <file>res/images/movement/question/19.png</file>
+        <file>res/images/movement/question/20.png</file>
+        <file>res/images/movement/question/21.png</file>
+        <file>res/images/movement/question/22.png</file>
+        <file>res/images/movement/question/23.png</file>
+        <file>res/images/movement/question/24.png</file>
+        <file>res/images/movement/question/25.png</file>
+        <file>res/images/movement/question/26.png</file>
+        <file>res/images/movement/question/27.png</file>
+        <file>res/images/movement/question/28.png</file>
+        <file>res/images/movement/question/29.png</file>
+        <file>res/images/movement/question/30.png</file>
+        <file>res/images/movement/question/31.png</file>
     </qresource>
     <qresource prefix="/wink">
         <file>res/images/movement/wink/1.png</file>
@@ -173,5 +234,13 @@
         <file>res/images/movement/wink/7.png</file>
         <file>res/images/movement/wink/8.png</file>
         <file>res/images/movement/wink/9.png</file>
+        <file>res/images/movement/wink/10.png</file>
+        <file>res/images/movement/wink/11.png</file>
+        <file>res/images/movement/wink/12.png</file>
+        <file>res/images/movement/wink/13.png</file>
+        <file>res/images/movement/wink/14.png</file>
+        <file>res/images/movement/wink/15.png</file>
+        <file>res/images/movement/wink/16.png</file>
+        <file>res/images/movement/wink/17.png</file>
     </qresource>
 </RCC>

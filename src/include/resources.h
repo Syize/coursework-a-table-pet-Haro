@@ -111,17 +111,17 @@ namespace Movement
 {
     enum MovementKind
     {
-        Blink = 0,
         CloseEyes,
-        Cruel,
-        Error,
         Fly,
         Hand,
         Heart,
         Question,
         Wink,
+        Blink = 10,
+        Cruel,
+        Error,
     };
-    const int movementNum = 9;
+    const int movementNum = 6;
     // get picture number of specific movement
     int getMovementNum(MovementKind index);
     // get path name of specific movement

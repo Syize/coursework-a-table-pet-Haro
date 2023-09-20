@@ -3,6 +3,7 @@
 #define EAR_SWITCH_MAX_COUNT 50
 #define SHOW_BYE_MAX_COUNT 50
 #define EYE_MOVE_MAX_COUNT 5
+#define ERROR_MOVEMENT_TRIGGER_COUNT 10
 
 #include <QMainWindow>
 #include <QMouseEvent>
@@ -86,6 +87,12 @@ private:
     int eyeMoveKind = -1;
     // eye switch interval count
     int eyeSwitchInterval = 0;
+    // error movement trigger count
+    int errorMovemntTriggerCount = 0;
+    // custom count add to eye switch interval count.
+    // for example, if you set it to 50, then the inverval between eye movement picture will be (50 + EYE_MOVE_MAX_COUNT)x10 ms.
+    // but please note that it will be reset to 0 after a movemnt finish.
+    int customEyeSwitchInterval = 0;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:

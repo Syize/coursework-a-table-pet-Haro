@@ -197,21 +197,21 @@ int Movement::getMovementNum(Movement::MovementKind index)
         return 17;
         break;
     case CloseEyes:
-        return 15;
+        return 29;
     case Cruel:
         return 1;
     case Error:
         return 11;
     case Fly:
-        return 22;
+        return 43;
     case Hand:
         return 1;
     case Heart:
-        return 12;
+        return 23;
     case Question:
-        return 16;
+        return 31;
     case Wink:
-        return 9;
+        return 17;
     default:
         throw "Invalid index";
         break;

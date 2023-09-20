@@ -364,11 +364,11 @@ void Haro::onCloseButtonClicked()
 //    this->setWindow->close();
 //    this->musicWindow->close();
 //    this->calenWindow->close();
-    this->ui->eyeImage->setPixmap(QPixmap(QString(Eye::getEye(Eye::ByeEye))).scaled(this->ui->eyeImage->size()));
     if (this->exitSwitch < 0)
     {
         this->exitSwitch = 0;
     }
+    this->ui->eyeImage->setPixmap(QPixmap(QString(Eye::getEye(Eye::ByeEye))).scaled(this->ui->eyeImage->size()));
 }
 
 void Haro::onDressButtonClicked()
@@ -568,6 +568,22 @@ void Haro::mousePressEvent(QMouseEvent *event)
         this->moreButtonSwith = 0;
         this->hideOrShowButton();
         // hide other window
+        this->errorMovemntTriggerCount ++;
+        if (this->errorMovemntTriggerCount >= ERROR_MOVEMENT_TRIGGER_COUNT)
+        {
+            // ohhhh, you destroy Haro T_T
+            this->eyeMoveKind = (int)Movement::Error;
+            this->eyeMoveIndex = 1;
+            this->errorMovemntTriggerCount = 0;
+            // add more interval so error can show longger.
+            this->customEyeSwitchInterval = 45;
+        }
+        // show random movement
+        if (this->eyeMoveKind < 0)
+        {
+            this->eyeMoveKind = rand() % Movement::movementNum;
+            this->eyeMoveIndex = 1;
+        }
     // if(face<0&&spMove<0){//随机播放表情
     //     face = qrand()%(faceSum-1)+1;
     //     flag++;
@@ -624,7 +640,7 @@ void Haro::eyesMovementLoad()
 
 void Haro::eyesMovement()
 {
-    if (this->eyeSwitchInterval >= EYE_MOVE_MAX_COUNT)
+    if (this->exitSwitch < 0 and this->eyeSwitchInterval >= (EYE_MOVE_MAX_COUNT + this->customEyeSwitchInterval))
     {
         if (this->eyeMoveKind >= 0)
         {
@@ -634,6 +650,11 @@ void Haro::eyesMovement()
             this->ui->eyeImage->setPixmap(QPixmap(QString(":/%1/res/images/movement/%2/%3.png"
                                                          ).arg(moveName).arg(moveName).arg(this->eyeMoveIndex)
                                                  ).scaled(this->ui->eyeImage->size()));
+            // if Haro wants to fly, we help it (seriously)
+            if (this->eyeMoveKind == Movement::Fly)
+            {
+                this->move(this->x(), this->y() - 5);
+            }
             // check if we have displayed all picture
             this->eyeMoveIndex ++;
             if (this->eyeMoveIndex > maxNumberOfMove)
@@ -641,6 +662,8 @@ void Haro::eyesMovement()
                 // reset move kind and move index
                 this->eyeMoveKind = -1;
                 this->eyeMoveIndex = 1;
+                // reset custom eye switch interval
+                this->customEyeSwitchInterval = 0;
             }
         }
         else
@@ -648,11 +671,11 @@ void Haro::eyesMovement()
             // there is no eye movment currently, so we throw a dice and see if Haro need to blink its cute eyes
             if ((rand() % 40) < 1)
             {
-                this->eyeMoveKind = 0;
+                this->eyeMoveKind = (int)Movement::Blink;
             }
             else
             {
-                // no, and we change eye picture to default
+                // no, and we're not going to shut down, so we change eye picture to default
                 this->ui->eyeImage->setPixmap(QPixmap(
                     Eye::getEye(Eye::Eye)
                 ).scaled(this->ui->eyeImage->size()));
