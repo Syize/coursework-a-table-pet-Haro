@@ -66,6 +66,16 @@ char* Ear::getEar(Ear::EarName index)
     case AngelEar:
         return ":/ear/res/images/appearance/ears/angel_ears1.png";
         break;
+    default:
+        throw "Invalid index";
+        break;
+    }
+}
+
+char* Ear::getEar2(Ear::EarName2 index)
+{
+    switch (index)
+    {
     case Ear2:
         return ":/ear/res/images/appearance/ears/def_ears2.png";
         break;
@@ -173,6 +183,64 @@ char* HaroIcon::getIcon(HaroIcon::IconName index)
     case Setting:
         return ":/icon/res/images/icon/setting.png";
     
+    default:
+        throw "Invalid index";
+        break;
+    }
+}
+
+int Movement::getMovementNum(Movement::MovementKind index)
+{
+    switch (index)
+    {
+    case Blink:
+        return 17;
+        break;
+    case CloseEyes:
+        return 15;
+    case Cruel:
+        return 1;
+    case Error:
+        return 11;
+    case Fly:
+        return 22;
+    case Hand:
+        return 1;
+    case Heart:
+        return 12;
+    case Question:
+        return 16;
+    case Wink:
+        return 9;
+    default:
+        throw "Invalid index";
+        break;
+    }
+}
+
+char* Movement::getMovementName(Movement::MovementKind index)
+{
+    switch (index)
+    {
+    case Blink:
+        return "blink";
+        break;
+    case CloseEyes:
+        return "closeEyes";
+    case Cruel:
+        return "cruel";
+    case Error:
+        return "error";
+    case Fly:
+        return "fly";
+    case Hand:
+        return "hand";
+    case Heart:
+        return "heart";
+    case Question:
+        return "question";
+    case Wink:
+        return "wink";
     default:
         throw "Invalid index";
         break;

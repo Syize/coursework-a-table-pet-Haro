@@ -1,5 +1,8 @@
 #ifndef HARO_H
 #define HARO_H
+#define EAR_SWITCH_MAX_COUNT 50
+#define SHOW_BYE_MAX_COUNT 50
+#define EYE_MOVE_MAX_COUNT 5
 
 #include <QMainWindow>
 #include <QMouseEvent>
@@ -17,7 +20,6 @@
 #include "dresswin.h"
 #include "setwin.h"
 #include "musicwin.h"
-#include "timer.h"
 
 using namespace std;
 
@@ -70,6 +72,20 @@ private:
     int basicButtonSwitch = 0, moreButtonSwith = 0;
     // flag to exit
     int exitSwitch = -1;
+    // remember ear dress index
+    int earDressIndex = 0;
+    // remember ear movement index
+    int earMoveIndex = 0;
+    // ear switch interval count, because timer emit signal every 10ms, and we change ear every 10xEAR_SWITCH_MAX_COUNT ms
+    int earSwitchInterval = 0;
+    // ear change flag
+    int earChangeFlag = 0;
+    // eye move index
+    int eyeMoveIndex = 1;
+    // eye move kind
+    int eyeMoveKind = -1;
+    // eye switch interval count
+    int eyeSwitchInterval = 0;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:
@@ -79,10 +95,14 @@ public:
     void initWindow();
     // bind slots
     void bindSlots();
+    // bind timer slots
+    void bindTimerSlots();
     // hide or show button
     void hideOrShowButton();
     // timer
-    Timer* timer;
+    QTimer* timer;
+    // ear movement
+    void earsMovement();
 
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 

@@ -52,4 +52,126 @@
         <file>res/images/icon/play.png</file>
         <file>res/images/icon/setting.png</file>
     </qresource>
+    <qresource prefix="/blink">
+        <file>res/images/movement/blink/1.png</file>
+        <file>res/images/movement/blink/2.png</file>
+        <file>res/images/movement/blink/3.png</file>
+        <file>res/images/movement/blink/4.png</file>
+        <file>res/images/movement/blink/5.png</file>
+        <file>res/images/movement/blink/6.png</file>
+        <file>res/images/movement/blink/7.png</file>
+        <file>res/images/movement/blink/8.png</file>
+        <file>res/images/movement/blink/9.png</file>
+        <file>res/images/movement/blink/10.png</file>
+        <file>res/images/movement/blink/11.png</file>
+        <file>res/images/movement/blink/12.png</file>
+        <file>res/images/movement/blink/13.png</file>
+        <file>res/images/movement/blink/14.png</file>
+        <file>res/images/movement/blink/15.png</file>
+        <file>res/images/movement/blink/16.png</file>
+        <file>res/images/movement/blink/17.png</file>
+    </qresource>
+    <qresource prefix="/closeEyes">
+        <file>res/images/movement/closeEyes/1.png</file>
+        <file>res/images/movement/closeEyes/2.png</file>
+        <file>res/images/movement/closeEyes/3.png</file>
+        <file>res/images/movement/closeEyes/4.png</file>
+        <file>res/images/movement/closeEyes/5.png</file>
+        <file>res/images/movement/closeEyes/6.png</file>
+        <file>res/images/movement/closeEyes/7.png</file>
+        <file>res/images/movement/closeEyes/8.png</file>
+        <file>res/images/movement/closeEyes/9.png</file>
+        <file>res/images/movement/closeEyes/10.png</file>
+        <file>res/images/movement/closeEyes/11.png</file>
+        <file>res/images/movement/closeEyes/12.png</file>
+        <file>res/images/movement/closeEyes/13.png</file>
+        <file>res/images/movement/closeEyes/14.png</file>
+        <file>res/images/movement/closeEyes/15.png</file>
+    </qresource>
+    <qresource prefix="/cruel">
+        <file>res/images/movement/cruel/1.png</file>
+    </qresource>
+    <qresource prefix="/error">
+        <file>res/images/movement/error/1.png</file>
+        <file>res/images/movement/error/2.png</file>
+        <file>res/images/movement/error/3.png</file>
+        <file>res/images/movement/error/4.png</file>
+        <file>res/images/movement/error/5.png</file>
+        <file>res/images/movement/error/6.png</file>
+        <file>res/images/movement/error/7.png</file>
+        <file>res/images/movement/error/8.png</file>
+        <file>res/images/movement/error/9.png</file>
+        <file>res/images/movement/error/10.png</file>
+        <file>res/images/movement/error/11.png</file>
+    </qresource>
+    <qresource prefix="/fly">
+        <file>res/images/movement/fly/1.png</file>
+        <file>res/images/movement/fly/2.png</file>
+        <file>res/images/movement/fly/3.png</file>
+        <file>res/images/movement/fly/4.png</file>
+        <file>res/images/movement/fly/5.png</file>
+        <file>res/images/movement/fly/6.png</file>
+        <file>res/images/movement/fly/7.png</file>
+        <file>res/images/movement/fly/8.png</file>
+        <file>res/images/movement/fly/9.png</file>
+        <file>res/images/movement/fly/10.png</file>
+        <file>res/images/movement/fly/11.png</file>
+        <file>res/images/movement/fly/12.png</file>
+        <file>res/images/movement/fly/13.png</file>
+        <file>res/images/movement/fly/14.png</file>
+        <file>res/images/movement/fly/15.png</file>
+        <file>res/images/movement/fly/16.png</file>
+        <file>res/images/movement/fly/17.png</file>
+        <file>res/images/movement/fly/18.png</file>
+        <file>res/images/movement/fly/19.png</file>
+        <file>res/images/movement/fly/20.png</file>
+        <file>res/images/movement/fly/21.png</file>
+        <file>res/images/movement/fly/22.png</file>
+    </qresource>
+    <qresource prefix="/hand">
+        <file>res/images/movement/hand/1.png</file>
+    </qresource>
+    <qresource prefix="/heart">
+        <file>res/images/movement/heart/1.png</file>
+        <file>res/images/movement/heart/2.png</file>
+        <file>res/images/movement/heart/3.png</file>
+        <file>res/images/movement/heart/4.png</file>
+        <file>res/images/movement/heart/5.png</file>
+        <file>res/images/movement/heart/6.png</file>
+        <file>res/images/movement/heart/7.png</file>
+        <file>res/images/movement/heart/8.png</file>
+        <file>res/images/movement/heart/9.png</file>
+        <file>res/images/movement/heart/10.png</file>
+        <file>res/images/movement/heart/11.png</file>
+        <file>res/images/movement/heart/12.png</file>
+    </qresource>
+    <qresource prefix="/question">
+        <file>res/images/movement/question/2.png</file>
+        <file>res/images/movement/question/3.png</file>
+        <file>res/images/movement/question/4.png</file>
+        <file>res/images/movement/question/5.png</file>
+        <file>res/images/movement/question/6.png</file>
+        <file>res/images/movement/question/7.png</file>
+        <file>res/images/movement/question/8.png</file>
+        <file>res/images/movement/question/9.png</file>
+        <file>res/images/movement/question/10.png</file>
+        <file>res/images/movement/question/11.png</file>
+        <file>res/images/movement/question/12.png</file>
+        <file>res/images/movement/question/13.png</file>
+        <file>res/images/movement/question/14.png</file>
+        <file>res/images/movement/question/15.png</file>
+        <file>res/images/movement/question/16.png</file>
+        <file>res/images/movement/question/1.png</file>
+    </qresource>
+    <qresource prefix="/wink">
+        <file>res/images/movement/wink/1.png</file>
+        <file>res/images/movement/wink/2.png</file>
+        <file>res/images/movement/wink/3.png</file>
+        <file>res/images/movement/wink/4.png</file>
+        <file>res/images/movement/wink/5.png</file>
+        <file>res/images/movement/wink/6.png</file>
+        <file>res/images/movement/wink/7.png</file>
+        <file>res/images/movement/wink/8.png</file>
+        <file>res/images/movement/wink/9.png</file>
+    </qresource>
 </RCC>

@@ -1,7 +1,6 @@
 #include "dresswin.h"
 #include "ui_dresswin.h"
 #include "resources.h"
-#include <iostream>
 
 DressWin::DressWin(QWidget *parent)
         : QWidget(parent)
@@ -149,14 +148,12 @@ DressWin::~DressWin()
 
 void DressWin::bodyChange(int id)
 {
-    cout << "Body changed: " << id << endl;
     emit this->bodyChangeSignal(id);
     // bodyNum = id;
 }
 
 void DressWin::earsChange(int id)
 {
-    cout << "Ear changed: " << id << endl;
     emit this->earChangeSignal(id);
     // earsNum = id;
 }

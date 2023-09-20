@@ -6,10 +6,6 @@
 #include <QButtonGroup>
 #include <QLabel>
 
-using namespace std;
-
-const int NUM = 8;//装扮数量
-
 namespace Ui {
 class DressWin;
 }

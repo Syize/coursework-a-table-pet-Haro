@@ -35,7 +35,12 @@ namespace Ear
         CatEar,
         GundamEar,
         DrillEar,
-        AngelEar,
+        AngelEar
+    };
+
+    // store ear animation in two enum so we can get picture path with same index
+    enum EarName2
+    {
         Ear2,
         BlueEar2,
         PinkEar2,
@@ -50,6 +55,8 @@ namespace Ear
     const int EarNum = 8;
 
     char* getEar(EarName index);
+
+    char* getEar2(EarName2 index);
 }
 
 namespace Eye
@@ -99,5 +106,26 @@ namespace HaroIcon
 
     char* getIcon(IconName index);
 }
+
+namespace Movement
+{
+    enum MovementKind
+    {
+        Blink = 0,
+        CloseEyes,
+        Cruel,
+        Error,
+        Fly,
+        Hand,
+        Heart,
+        Question,
+        Wink,
+    };
+    const int movementNum = 9;
+    // get picture number of specific movement
+    int getMovementNum(MovementKind index);
+    // get path name of specific movement
+    char* getMovementName(MovementKind index);
+} // namespace Movement
 
 #endif

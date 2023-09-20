@@ -46,10 +46,10 @@ Haro::Haro(QWidget *parent)
     // timer->start(40);//动画速度
     // connect(timer,&QTimer::timeout,this,&Haro::eyesMovement);//关联眼部动作
 
-    // this->size = 400;
+    this->size = 400;
     this->bodyNum = 0;
     this->earsNum = 0;
-    imageLoad();//载入部位图片
+    // imageLoad();//载入部位图片
     // eyesMovementLoad();//载入表情图片
     // specialMovementLoad();//载入特殊动作图片
 
@@ -77,10 +77,9 @@ Haro::Haro(QWidget *parent)
     // bind slots to signals
     this->bindSlots();
     // init timer
-    this->timer = new Timer();
-    this->timer->setSleepTime(1);
-    QObject::connect(this->timer, &Timer::atTime, this, &Haro::timerSlots);
-    this->timer->start();
+    this->timer = new QTimer(this);
+    this->bindTimerSlots();
+    this->timer->start(10);
     // initSystemTray();//初始化系统托盘
 }
 
@@ -126,14 +125,14 @@ void Haro::imageLoad()
     ears1.push_back(QPixmap(QString(Ear::getEar(Ear::DrillEar))));
     ears1.push_back(QPixmap(QString(Ear::getEar(Ear::AngelEar))));
 
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::Ear2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::BlueEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::PinkEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::IceFireEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::CatEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::GundamEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::DrillEar2))));
-    ears2.push_back(QPixmap(QString(Ear::getEar(Ear::AngelEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::Ear2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::BlueEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::PinkEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::IceFireEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::CatEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::GundamEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::DrillEar2))));
+    ears2.push_back(QPixmap(QString(Ear::getEar2(Ear::AngelEar2))));
 
     eyes.load(Eye::getEye(Eye::Eye));
     stripe.load(Stripe::getStripe(Stripe::Stripe));
@@ -163,6 +162,13 @@ void Haro::bindSlots()
     QObject::connect(this->dressWindow, &DressWin::earChangeSignal, this, &Haro::earChangeSlots);
 }
 
+void Haro::bindTimerSlots()
+{
+    QObject::connect(this->timer, &QTimer::timeout, this, &Haro::timerSlots);
+    QObject::connect(this->timer, &QTimer::timeout, this, &Haro::earsMovement);
+    QObject::connect(this->timer, &QTimer::timeout, this, &Haro::eyesMovement);
+}
+
 void Haro::bodyChangeSlots(int index)
 {
     this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody((enum Body::BodyName)index))).scaled(this->ui->bodyImage->size()));
@@ -170,19 +176,58 @@ void Haro::bodyChangeSlots(int index)
 
 void Haro::earChangeSlots(int index)
 {
-    this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar((enum Ear::EarName)index))).scaled(this->ui->earImage->size()));
+    this->earDressIndex = index;
+    this->earChangeFlag = 1;
+    // this->ui->earImage->setPixmap(QPixmap(QString(Ear::getEar((enum Ear::EarName)index))).scaled(this->ui->earImage->size()));
 }
 
 void Haro::timerSlots()
 {
-    // every call means one second has elapsed
-    if (this->exitSwitch >= 1)
+    // every call means one 10 ms has elapsed
+    // we want "Bye" show 10xSHOW_BYE_MAX_COUNT ms
+    if (this->exitSwitch >= SHOW_BYE_MAX_COUNT)
     {
        emit this->exitSignal();
     }
     else if (this->exitSwitch >= 0)
     {
         this->exitSwitch ++;
+    }
+}
+
+void Haro::earsMovement()
+{
+    if (this->earSwitchInterval >= EAR_SWITCH_MAX_COUNT)
+    {
+        if (this->earMoveIndex == 0)
+        {
+            this->ui->earImage->setPixmap(QPixmap(QString(
+                Ear::getEar((enum Ear::EarName)this->earDressIndex)
+            )).scaled(this->ui->earImage->size()));
+        }
+        else
+        {
+            this->ui->earImage->setPixmap(QPixmap(QString(
+                Ear::getEar2((enum Ear::EarName2)this->earDressIndex)
+            )).scaled(this->ui->earImage->size()));
+        }
+        this->earMoveIndex = (this->earMoveIndex + 1) % 2;
+        this->earSwitchInterval = 0;
+    }
+    else if (this->earChangeFlag)
+    {
+        // user has changed ear, we need to change immediately
+        this->ui->earImage->setPixmap(QPixmap(QString(
+            Ear::getEar((enum Ear::EarName)this->earDressIndex)
+        )).scaled(this->ui->earImage->size()));
+        // reset switch interval count and move index
+        this->earSwitchInterval = 0;
+        this->earMoveIndex = 1;
+        this->earChangeFlag = 0;
+    }
+    else
+    {   
+        this->earSwitchInterval ++;
     }
 }
 
@@ -329,15 +374,16 @@ void Haro::onCloseButtonClicked()
 void Haro::onDressButtonClicked()
 {
     if(dressWindow->isHidden()){
-        dressWindow->move(x()+frameGeometry().width()/2-10
-                          -btnSize*0.6-dressWindow->frameGeometry().width(),
-                          y()+frameGeometry().height()/2-150
-                          -dressWindow->frameGeometry().height()/2);
+        this->dressWindow->move(100, 100);
+        // dressWindow->move(x()+frameGeometry().width()/2-10
+        //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
+        //                   y()+frameGeometry().height()/2-150
+        //                   -dressWindow->frameGeometry().height()/2);
         dressWindow->show();
         // calenWindow->hide();
         // setWindow->hide();
         // musicWindow->hide();
-        btnSwitch_2=0;
+        // btnSwitch_2=0;
         // btnSwitchRole();
     }
     else
@@ -521,6 +567,7 @@ void Haro::mousePressEvent(QMouseEvent *event)
         this->basicButtonSwitch = 0;
         this->moreButtonSwith = 0;
         this->hideOrShowButton();
+        // hide other window
     // if(face<0&&spMove<0){//随机播放表情
     //     face = qrand()%(faceSum-1)+1;
     //     flag++;
@@ -577,45 +624,89 @@ void Haro::eyesMovementLoad()
 
 void Haro::eyesMovement()
 {
-    //各种静态变量，用于计数、记录状态等↓
-    static int flag = 0,second1 = 0,second2 = 0,earSwitch = 1;
-    int valve = qrand()%200;
-    if(face<0 && spMove<0){//控制眨眼动作
-        second1++;
-        if(second1>=valve && valve>100){
-            face = 0;
-            second1 = 0;
+    if (this->eyeSwitchInterval >= EYE_MOVE_MAX_COUNT)
+    {
+        if (this->eyeMoveKind >= 0)
+        {
+            int maxNumberOfMove = Movement::getMovementNum((Movement::MovementKind)(this->eyeMoveKind));
+            // change eye picture
+            char* moveName = Movement::getMovementName((Movement::MovementKind)(this->eyeMoveKind));
+            this->ui->eyeImage->setPixmap(QPixmap(QString(":/%1/res/images/movement/%2/%3.png"
+                                                         ).arg(moveName).arg(moveName).arg(this->eyeMoveIndex)
+                                                 ).scaled(this->ui->eyeImage->size()));
+            // check if we have displayed all picture
+            this->eyeMoveIndex ++;
+            if (this->eyeMoveIndex > maxNumberOfMove)
+            {
+                // reset move kind and move index
+                this->eyeMoveKind = -1;
+                this->eyeMoveIndex = 1;
+            }
         }
-    }
-
-    second2++;//控制耳朵的动画
-    if(second2>40 && earSwitch){
-        this->ui->earImage->setPixmap(ears2[earsNum].scaled(size,size));
-        earSwitch = 0;
-        second2 = 0;
-    }
-    else if(second2>10 && !earSwitch){
-        this->ui->earImage->setPixmap(ears1[earsNum].scaled(size,size));
-        earSwitch = 1;
-        second2 = 0;
-    }
-
-    if(face!=-1){//控制表情变化
-    int num = faceNum[face*2],start = faceNum[face*2+1];
-        flag++;
-        if(flag<num)
-            this->ui->eyeImage->setPixmap(
-                        movement[start+flag].scaled(size,size));
         else
-            this->ui->eyeImage->setPixmap(
-                        movement[start-flag+(num-1)*2].scaled(size,size));
-
-        if(flag>=(num-1)*2){
-            flag = 0;
-            face = -1;
-            this->ui->eyeImage->setPixmap(eyes.scaled(size,size));
+        {
+            // there is no eye movment currently, so we throw a dice and see if Haro need to blink its cute eyes
+            if ((rand() % 40) < 1)
+            {
+                this->eyeMoveKind = 0;
+            }
+            else
+            {
+                // no, and we change eye picture to default
+                this->ui->eyeImage->setPixmap(QPixmap(
+                    Eye::getEye(Eye::Eye)
+                ).scaled(this->ui->eyeImage->size()));
+            }
+            
         }
+        this->eyeSwitchInterval = 0;
     }
+    else
+    {
+        this->eyeSwitchInterval ++;
+    }
+    
+    
+    
+    //各种静态变量，用于计数、记录状态等↓
+    // static int flag = 0,second1 = 0,second2 = 0,earSwitch = 1;
+    // int valve = qrand()%200;
+    // if(face<0 && spMove<0){//控制眨眼动作
+    //     second1++;
+    //     if(second1>=valve && valve>100){
+    //         face = 0;
+    //         second1 = 0;
+    //     }
+    // }
+
+    // second2++;//控制耳朵的动画
+    // if(second2>40 && earSwitch){
+    //     this->ui->earImage->setPixmap(ears2[earsNum].scaled(size,size));
+    //     earSwitch = 0;
+    //     second2 = 0;
+    // }
+    // else if(second2>10 && !earSwitch){
+    //     this->ui->earImage->setPixmap(ears1[earsNum].scaled(size,size));
+    //     earSwitch = 1;
+    //     second2 = 0;
+    // }
+
+    // if(face!=-1){//控制表情变化
+    // int num = faceNum[face*2],start = faceNum[face*2+1];
+    //     flag++;
+    //     if(flag<num)
+    //         this->ui->eyeImage->setPixmap(
+    //                     movement[start+flag].scaled(size,size));
+    //     else
+    //         this->ui->eyeImage->setPixmap(
+    //                     movement[start-flag+(num-1)*2].scaled(size,size));
+
+    //     if(flag>=(num-1)*2){
+    //         flag = 0;
+    //         face = -1;
+    //         this->ui->eyeImage->setPixmap(eyes.scaled(size,size));
+    //     }
+    // }
     // if(!dressWindow->isHidden()){//从换装窗口中获取bodyNum、earsNum参数
     //     if(bodyNum!=dressWindow->getBodyNum()){
     //         bodyNum = dressWindow->getBodyNum();
@@ -629,26 +720,26 @@ void Haro::eyesMovement()
     //     }
     // }
 
-    if(!setWindow->isHidden()){//从设置窗口中获取size参数
-        if(size!=setWindow->getSize()){
-            size = setWindow->getSize();
+    // if(!setWindow->isHidden()){//从设置窗口中获取size参数
+    //     if(size!=setWindow->getSize()){
+    //         size = setWindow->getSize();
 
-            imageSet(this->ui->bodyImage,body[bodyNum]);
-            imageSet(this->ui->eyeImage,eyes);
-            if(size>140){
-                imageSet(this->ui->stripeImage,stripe);
-                this->ui->stripeImage->show();
-            }
-            else
-                this->ui->stripeImage->hide();
-            imageSet(this->ui->earImage,ears1[earsNum]);
+    //         imageSet(this->ui->bodyImage,body[bodyNum]);
+    //         imageSet(this->ui->eyeImage,eyes);
+    //         if(size>140){
+    //             imageSet(this->ui->stripeImage,stripe);
+    //             this->ui->stripeImage->show();
+    //         }
+    //         else
+    //             this->ui->stripeImage->hide();
+    //         imageSet(this->ui->earImage,ears1[earsNum]);
 
-            saveData();
-            reInitBtn();
-        }
-    }
-    if(spMove>-1)//特殊动作
-        specialMovement();
+    //         saveData();
+    //         reInitBtn();
+    //     }
+    // }
+    // if(spMove>-1)//特殊动作
+    //     specialMovement();
 }
 
 
