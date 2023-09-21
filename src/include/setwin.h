@@ -21,20 +21,14 @@ public:
 
     void setSize(int);//设置size值
 
-    int getSize();//外部获取size值
-
 private slots:
-
-
-    void on_sizeSlider_valueChanged(int value);//滑动条槽函数
+    void onSliderValueChanged(int value);//滑动条槽函数
 
 private:
-
-    int haroSize;//haro大小参数
-
-    QLabel *sizeNum;//显示size值标签
-
     Ui::SetWin *ui;
+
+signals:
+    void sliderValueChanged(int);
 };
 
 #endif // SETWIN_H

@@ -149,6 +149,9 @@ void Haro::initWindow()
     // init all other windows
     // dresss window
     this->dressWindow = new DressWin;
+    // setting window
+    this->setWindow = new SetWin;
+    this->setWindow->setSize(300);
     // calendar window
     this->calenWindow = new QCalendarWidget;
     this->calenWindow->resize(600,400);
@@ -167,6 +170,7 @@ void Haro::initWindow()
 
 void Haro::bindSlots()
 {
+    QObject::connect(this->ui->settingButton, &QPushButton::clicked, this, &Haro::onSettingButtonClicked);
     QObject::connect(this->ui->minButton, &QPushButton::clicked, this, &Haro::onMinButtonClicked);
     QObject::connect(this->ui->calendarButton, &QPushButton::clicked, this, &Haro::onCalendarButtonClicked);
     QObject::connect(this->ui->moreButton, &QPushButton::clicked, this, &Haro::onMoreButtonClicked);
@@ -317,34 +321,34 @@ void Haro::initBtn()
 
 void Haro::reInitBtn()
 {
-    btnSize = size;
+    // btnSize = size;
 
    // if(btnSize > 650)//限制按钮大小
     //    btnSize = 650;
-    if(btnSize < 300)//限制按钮大小
-         btnSize = 300;
-    //按钮的坐标和大小参数
-    int btnX = this->frameGeometry().width()/2 - btnSize*3/5-5;
-    int btnY = this->frameGeometry().height()/2 - btnSize/4;
-    int btnWidth = btnSize/5;
-    int btnHeight = btnSize/8;
+    // if(btnSize < 300)//限制按钮大小
+    //      btnSize = 300;
+    // //按钮的坐标和大小参数
+    // int btnX = this->frameGeometry().width()/2 - btnSize*3/5-5;
+    // int btnY = this->frameGeometry().height()/2 - btnSize/4;
+    // int btnWidth = btnSize/5;
+    // int btnHeight = btnSize/8;
 
-    this->ui->closeButton->setGeometry(btnX,btnY,btnWidth,btnHeight);
-    // std::cout << "close button: " << btnX << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->dressButton->setGeometry(btnX,btnY + btnSize/6,btnWidth,btnHeight);
-    // std::cout << "dress button: " << btnX << ", " << btnY + btnSize / 6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->moreButton->setGeometry(btnX,btnY + 2*btnSize/6,btnWidth,btnHeight);
-    // std::cout << "more button: " << btnX << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->minButton->setGeometry(btnX,btnY + 3*btnSize/6,btnWidth,btnHeight);
-    // std::cout << "min button: " << btnX << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->closeButton->setGeometry(btnX,btnY,btnWidth,btnHeight);
+    // // std::cout << "close button: " << btnX << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->dressButton->setGeometry(btnX,btnY + btnSize/6,btnWidth,btnHeight);
+    // // std::cout << "dress button: " << btnX << ", " << btnY + btnSize / 6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->moreButton->setGeometry(btnX,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    // // std::cout << "more button: " << btnX << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->minButton->setGeometry(btnX,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    // // std::cout << "min button: " << btnX << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
 
-    this->ui->settingButton->setGeometry(btnX - btnWidth*1.2,btnY,btnWidth,btnHeight);
-    // std::cout << "setting button: " << btnX-btnWidth*1.2 << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->musicButton->setGeometry(btnX - btnWidth*1.2,btnY + btnSize/6,btnWidth,btnHeight);
-    // std::cout << "music button: " << btnX-btnWidth*1.2 << ", " << btnY+btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->gameButton->setGeometry(btnX - btnWidth*1.2,btnY + 2*btnSize/6,btnWidth,btnHeight);
-    // std::cout << "game button: " << btnX-btnWidth*1.2 << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
-    this->ui->calendarButton->setGeometry(btnX - btnWidth*1.2,btnY + 3*btnSize/6,btnWidth,btnHeight);
+    // this->ui->settingButton->setGeometry(btnX - btnWidth*1.2,btnY,btnWidth,btnHeight);
+    // // std::cout << "setting button: " << btnX-btnWidth*1.2 << ", " << btnY << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->musicButton->setGeometry(btnX - btnWidth*1.2,btnY + btnSize/6,btnWidth,btnHeight);
+    // // std::cout << "music button: " << btnX-btnWidth*1.2 << ", " << btnY+btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->gameButton->setGeometry(btnX - btnWidth*1.2,btnY + 2*btnSize/6,btnWidth,btnHeight);
+    // // std::cout << "game button: " << btnX-btnWidth*1.2 << ", " << btnY+2*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
+    // this->ui->calendarButton->setGeometry(btnX - btnWidth*1.2,btnY + 3*btnSize/6,btnWidth,btnHeight);
     // std::cout << "calendar button: " << btnX-btnWidth*1.2 << ", " << btnY+3*btnSize/6 << ", " << btnWidth << ", " << btnHeight << std::endl;
     //图标大小
     // QSize temp(btnSize/8,btnSize/8);
@@ -387,21 +391,24 @@ void Haro::onCloseButtonClicked()
 
 void Haro::onDressButtonClicked()
 {
-    if(dressWindow->isHidden()){
+    if(this->dressWindow->isHidden())
+    {
         this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
         // dressWindow->move(x()+frameGeometry().width()/2-10
         //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
         //                   y()+frameGeometry().height()/2-150
         //                   -dressWindow->frameGeometry().height()/2);
-        dressWindow->show();
-        calenWindow->hide();
-        // setWindow->hide();
+        this->dressWindow->show();
+        this->calenWindow->hide();
+        this->setWindow->hide();
         // musicWindow->hide();
         // btnSwitch_2=0;
         // btnSwitchRole();
     }
     else
-        dressWindow->hide();
+    {
+        this->dressWindow->hide();
+    }
 }
 
 void Haro::onMoreButtonClicked()
@@ -414,6 +421,7 @@ void Haro::onMoreButtonClicked()
         // move other window
         this->dressWindow->move(this->x() - this->dressWindow->width(), this->y());
         this->calenWindow->move(this->x() - this->calenWindow->width(), this->y());
+        this->setWindow->move(this->x() - this->setWindow->width(), this->y());
     }
     else
     {
@@ -423,6 +431,7 @@ void Haro::onMoreButtonClicked()
         // moveother window
         this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
         this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
+        this->setWindow->move(this->x() - this->setWindow->width() + 100, this->y());
     }
 }
 
@@ -430,8 +439,9 @@ void Haro::onMinButtonClicked()
 {
     //this->setWindowState(Qt::WindowMinimized);//最小化窗口（已弃用）
     this->hide();
-    dressWindow->hide();
-    calenWindow->hide();
+    this->dressWindow->hide();
+    this->calenWindow->hide();
+    this->setWindow->hide();
     // hide button two
     this->basicButtonSwitch = 0;
     this->moreButtonSwith = 0;
@@ -444,21 +454,22 @@ void Haro::onMinButtonClicked()
     // btnSwitchRole();
 }
 
-void Haro::setBtnPush()
+void Haro::onSettingButtonClicked()
 {
-    if(setWindow->isHidden()){
+    if(setWindow->isHidden())
+    {
         //移动窗口坐标↓
-        setWindow->move(x()+frameGeometry().width()/2
-        -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-setWindow->frameGeometry().width(),
-        y()+frameGeometry().height()/2-size/5
-        -setWindow->frameGeometry().height()/2);
-
-        setWindow->show();
-        calenWindow->hide();
-        musicWindow->hide();
+        this->setWindow->move(this->x() - this->setWindow->width(), this->y());
+        this->setWindow->show();
+        // hide other window
+        this->calenWindow->hide();
+        this->dressWindow->hide();
+        // musicWindow->hide();
     }
     else
+    {
         setWindow->hide();
+    }
 }
 
 void Haro::musicBtnPush()
@@ -509,13 +520,13 @@ void Haro::onCalendarButtonClicked()
         // -calenWindow->frameGeometry().height()/2);
         this->calenWindow->move(this->x() - 600, this->y());
 
-        calenWindow->show();
+        this->calenWindow->show();
         this->dressWindow->hide();
         // musicWindow->hide();
-        // setWindow->hide();
+        this->setWindow->hide();
     }
     else
-        calenWindow->hide();
+        this->calenWindow->hide();
 }
 
 void Haro::onSystemTrayIconActivate()
@@ -568,6 +579,7 @@ void Haro::mouseMoveEvent(QMouseEvent *event)
         // move other window simultaneously
         this->dressWindow->move(this->x() - 470 + 180, this->y());
         this->calenWindow->move(this->x() - 600 + 180, this->y());
+        this->setWindow->move(this->x() - this->setWindow->width() + 180, this->y());
         // dressWindow->move(x()+frameGeometry().width()/2-10
         //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
         //                   y()+frameGeometry().height()/2-150
@@ -635,6 +647,7 @@ void Haro::mousePressEvent(QMouseEvent *event)
             // we need to move other window to left side of basic button
             this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
             this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
+            this->setWindow->move(this->x() - this->setWindow->width() + 100, this->y());
         }
         else
         {
@@ -645,6 +658,7 @@ void Haro::mousePressEvent(QMouseEvent *event)
             // move other window to Haro's left side
             this->dressWindow->move(this->x() - this->dressWindow->width() + 180, this->y());
             this->calenWindow->move(this->x() - this->calenWindow->width() + 180, this->y());
+            this->setWindow->move(this->x() - this->setWindow->width() + 180, this->y());
         }
     }
 }

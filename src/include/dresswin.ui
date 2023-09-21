@@ -17,7 +17,7 @@
    <double>0.950000000000000</double>
   </property>
   <property name="styleSheet">
-   <string notr="true">border-radius:50px</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

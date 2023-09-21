@@ -137,7 +137,7 @@ public:
 
     void onMinButtonClicked();//点击最小化按钮事件
 
-    void setBtnPush();//点击设置按钮事件
+    void onSettingButtonClicked();//点击设置按钮事件
 
     void musicBtnPush();//点击设置按钮事件
 
@@ -159,6 +159,7 @@ public slots:
     void bodyChangeSlots(int);
     void earChangeSlots(int);
     void timerSlots();
+    void haroSizeChangeSlots(int);
 
 signals:
     void exitSignal();
