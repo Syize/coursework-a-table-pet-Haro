@@ -9,6 +9,16 @@ DressWin::DressWin(QWidget *parent)
 
     this->ui->setupUi(this);
 
+    QBitmap bmp(this->size());//设置圆角边框
+    bmp.fill();
+    QPainter p(&bmp);
+    p.setPen(Qt::NoPen);
+    p.setBrush(Qt::black);
+    p.drawRoundedRect(bmp.rect(),50,50);
+    setMask(bmp);
+    setWindowOpacity(0.95);//设置透明度
+    // setStyleSheet("background-color:white;");
+
     #ifdef _WIN32
         // On Windows we need to set Qt::Tool so this app won't show in Windows' taskbar
         this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);

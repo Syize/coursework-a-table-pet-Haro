@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLabel>
+#include <QBitmap>
+#include <QPainter>
 
 namespace Ui {
 class DressWin;
