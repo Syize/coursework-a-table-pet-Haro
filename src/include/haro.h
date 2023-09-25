@@ -93,6 +93,8 @@ private:
     // for example, if you set it to 50, then the inverval between eye movement picture will be (50 + EYE_MOVE_MAX_COUNT)x10 ms.
     // but please note that it will be reset to 0 after a movemnt finish.
     int customEyeSwitchInterval = 0;
+    // remember body index and ear index
+    int bodyDressIndex = 0;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:

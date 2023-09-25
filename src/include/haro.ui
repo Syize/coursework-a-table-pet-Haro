@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
+    <width>580</width>
     <height>413</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <widget class="QLabel" name="bodyImage">
     <property name="geometry">
      <rect>
-      <x>145</x>
+      <x>180</x>
       <y>4</y>
       <width>400</width>
       <height>400</height>
@@ -45,7 +45,7 @@
    <widget class="QLabel" name="eyeImage">
     <property name="geometry">
      <rect>
-      <x>145</x>
+      <x>180</x>
       <y>4</y>
       <width>400</width>
       <height>400</height>
@@ -67,7 +67,7 @@
    <widget class="QLabel" name="stripeImage">
     <property name="geometry">
      <rect>
-      <x>145</x>
+      <x>180</x>
       <y>4</y>
       <width>400</width>
       <height>400</height>
@@ -89,7 +89,7 @@
    <widget class="QLabel" name="earImage">
     <property name="geometry">
      <rect>
-      <x>145</x>
+      <x>180</x>
       <y>4</y>
       <width>400</width>
       <height>400</height>

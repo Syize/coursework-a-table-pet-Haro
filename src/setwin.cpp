@@ -2,6 +2,7 @@
 #include "ui_setwin.h"
 #include "resources.h"
 #include <QSlider>
+#include <QSpinBox>
 
 SetWin::SetWin(QWidget *parent) :
     QWidget(parent),
@@ -40,6 +41,8 @@ SetWin::SetWin(QWidget *parent) :
 
     // bind slot
     QObject::connect(this->ui->haroSizeSlider, &QSlider::valueChanged, this, &SetWin::onSliderValueChanged);
+    QObject::connect(this->ui->sliderValueSpinBox, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxValueChanged(int)));
+    // QObject::connect(this->ui->sliderValueSpinBox, &QSpinBox::valueChanged, this, &SetWin::onSpinBoxValueChanged);
 
 }
 
@@ -70,8 +73,14 @@ void SetWin::setSize(int size)
 void SetWin::onSliderValueChanged(int value)
 {
     // set number
-    this->ui->sliderValueLabel->setText(QString("%1 px").arg(value));
+    this->ui->sliderValueSpinBox->setValue(value);
     emit this->sliderValueChanged(value);
     // haroSize = value;
     // sizeNum->setNum(haroSize);
+}
+
+void SetWin::onSpinBoxValueChanged(int value)
+{
+    this->ui->haroSizeSlider->setValue(value);
+    emit this->sliderValueChanged(value);
 }

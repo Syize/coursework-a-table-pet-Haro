@@ -170,6 +170,7 @@ void Haro::initWindow()
 
 void Haro::bindSlots()
 {
+    QObject::connect(this->setWindow, &SetWin::sliderValueChanged, this, &Haro::haroSizeChangeSlots);
     QObject::connect(this->ui->settingButton, &QPushButton::clicked, this, &Haro::onSettingButtonClicked);
     QObject::connect(this->ui->minButton, &QPushButton::clicked, this, &Haro::onMinButtonClicked);
     QObject::connect(this->ui->calendarButton, &QPushButton::clicked, this, &Haro::onCalendarButtonClicked);
@@ -189,6 +190,7 @@ void Haro::bindTimerSlots()
 
 void Haro::bodyChangeSlots(int index)
 {
+    this->bodyDressIndex = index;
     this->ui->bodyImage->setPixmap(QPixmap(QString(Body::getBody((enum Body::BodyName)index))).scaled(this->ui->bodyImage->size()));
 }
 
@@ -246,6 +248,35 @@ void Haro::earsMovement()
     else
     {   
         this->earSwitchInterval ++;
+    }
+}
+
+void Haro::haroSizeChangeSlots(int size)
+{
+    // check if size >= 400, because we want window's size is larger than 400
+    if (size >= 400)
+    {
+        this->resize(145 + size, size);
+    }
+    this->ui->bodyImage->resize(size, size);
+    this->ui->earImage->resize(size, size);
+    this->ui->eyeImage->resize(size, size);
+    this->ui->stripeImage->resize(size, size);
+    // reset image except eyeImage and earImage
+    this->ui->bodyImage->setPixmap(QPixmap(QString(
+        Body::getBody((Body::BodyName)(this->bodyDressIndex))
+    )).scaled(this->ui->bodyImage->size()));
+    // haro doesn't need stripe when its size is less than 300
+    if (size <= 300)
+    {
+        this->ui->stripeImage->setVisible(false);
+    }
+    else
+    {
+        this->ui->stripeImage->setVisible(true);
+        this->ui->stripeImage->setPixmap(QPixmap(QString(
+            Stripe::getStripe(Stripe::Stripe)
+        )).scaled(this->ui->stripeImage->size()));
     }
 }
 

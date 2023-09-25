@@ -23,6 +23,7 @@ public:
 
 private slots:
     void onSliderValueChanged(int value);//滑动条槽函数
+    void onSpinBoxValueChanged(int value);
 
 private:
     Ui::SetWin *ui;
