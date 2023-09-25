@@ -149,6 +149,8 @@ void Haro::initWindow()
     // init all other windows
     // dresss window
     this->dressWindow = new DressWin;
+    // music window
+    this->musicWindow = new MusicWin;
     // setting window
     this->setWindow = new SetWin;
     this->setWindow->setSize(300);
@@ -170,6 +172,7 @@ void Haro::initWindow()
 
 void Haro::bindSlots()
 {
+    QObject::connect(this->ui->musicButton, &QPushButton::clicked, this, &Haro::onMusicButtonClicked);
     QObject::connect(this->setWindow, &SetWin::sliderValueChanged, this, &Haro::haroSizeChangeSlots);
     QObject::connect(this->ui->settingButton, &QPushButton::clicked, this, &Haro::onSettingButtonClicked);
     QObject::connect(this->ui->minButton, &QPushButton::clicked, this, &Haro::onMinButtonClicked);
@@ -179,6 +182,8 @@ void Haro::bindSlots()
     QObject::connect(this->ui->closeButton, &QPushButton::clicked, this, &Haro::onCloseButtonClicked);
     QObject::connect(this->dressWindow, &DressWin::bodyChangeSignal, this, &Haro::bodyChangeSlots);
     QObject::connect(this->dressWindow, &DressWin::earChangeSignal, this, &Haro::earChangeSlots);
+    QObject::connect(this->musicWindow, &MusicWin::hideHaro, this, &Haro::hideHaroSlots);
+    QObject::connect(this->musicWindow, &MusicWin::showHaro, this, &Haro::showHaroSlots);
 }
 
 void Haro::bindTimerSlots()
@@ -278,6 +283,20 @@ void Haro::haroSizeChangeSlots(int size)
             Stripe::getStripe(Stripe::Stripe)
         )).scaled(this->ui->stripeImage->size()));
     }
+}
+
+void Haro::hideHaroSlots()
+{
+    // hide music window and haro
+    this->musicWindow->hide();
+    this->hide();
+}
+
+void Haro::showHaroSlots()
+{
+    // show music window and haro
+    this->show();
+    this->musicWindow->show();
 }
 
 void Haro::hideOrShowButton()
@@ -453,6 +472,7 @@ void Haro::onMoreButtonClicked()
         this->dressWindow->move(this->x() - this->dressWindow->width(), this->y());
         this->calenWindow->move(this->x() - this->calenWindow->width(), this->y());
         this->setWindow->move(this->x() - this->setWindow->width(), this->y());
+        this->musicWindow->move(this->x() - this->musicWindow->width(), this->y());
     }
     else
     {
@@ -463,6 +483,7 @@ void Haro::onMoreButtonClicked()
         this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
         this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
         this->setWindow->move(this->x() - this->setWindow->width() + 100, this->y());
+        this->musicWindow->move(this->x() - this->musicWindow->width() + 100, this->y());
     }
 }
 
@@ -495,7 +516,7 @@ void Haro::onSettingButtonClicked()
         // hide other window
         this->calenWindow->hide();
         this->dressWindow->hide();
-        // musicWindow->hide();
+        this->musicWindow->hide();
     }
     else
     {
@@ -503,21 +524,21 @@ void Haro::onSettingButtonClicked()
     }
 }
 
-void Haro::musicBtnPush()
+void Haro::onMusicButtonClicked()
 {
-    if(musicWindow->isHidden()){
+    if(this->musicWindow->isHidden()){
         //移动窗口坐标↓
-        musicWindow->move(x()+frameGeometry().width()/2
-        -btnSize*(btnSwitch_1+btnSwitch_2+1.5)/4-musicWindow->frameGeometry().width(),
-        y()+frameGeometry().height()/2-size/5
-        -musicWindow->frameGeometry().height()/2);
+        this->musicWindow->move(this->x() - this->setWindow->width(), this->y());
 
-        musicWindow->show();
-        calenWindow->hide();
-        setWindow->hide();
+        this->musicWindow->show();
+        this->calenWindow->hide();
+        this->setWindow->hide();
+        this->dressWindow->hide();
     }
     else
-        musicWindow->hide();
+    {
+        this->musicWindow->hide();
+    }
 }
 
 void Haro::gameBtnPush()
@@ -611,6 +632,7 @@ void Haro::mouseMoveEvent(QMouseEvent *event)
         this->dressWindow->move(this->x() - 470 + 180, this->y());
         this->calenWindow->move(this->x() - 600 + 180, this->y());
         this->setWindow->move(this->x() - this->setWindow->width() + 180, this->y());
+        this->musicWindow->move(this->x() - this->musicWindow->width() + 180, this->y());
         // dressWindow->move(x()+frameGeometry().width()/2-10
         //                   -btnSize*0.6-dressWindow->frameGeometry().width(),
         //                   y()+frameGeometry().height()/2-150
@@ -679,6 +701,7 @@ void Haro::mousePressEvent(QMouseEvent *event)
             this->dressWindow->move(this->x() - this->dressWindow->width() + 100, this->y());
             this->calenWindow->move(this->x() - this->calenWindow->width() + 100, this->y());
             this->setWindow->move(this->x() - this->setWindow->width() + 100, this->y());
+            this->musicWindow->move(this->x() - this->musicWindow->width() + 100, this->y());
         }
         else
         {
@@ -690,6 +713,7 @@ void Haro::mousePressEvent(QMouseEvent *event)
             this->dressWindow->move(this->x() - this->dressWindow->width() + 180, this->y());
             this->calenWindow->move(this->x() - this->calenWindow->width() + 180, this->y());
             this->setWindow->move(this->x() - this->setWindow->width() + 180, this->y());
+            this->musicWindow->move(this->x() - this->musicWindow->width() + 180, this->y());
         }
     }
 }

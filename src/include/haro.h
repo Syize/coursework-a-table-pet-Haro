@@ -141,7 +141,7 @@ public:
 
     void onSettingButtonClicked();//点击设置按钮事件
 
-    void musicBtnPush();//点击设置按钮事件
+    void onMusicButtonClicked();//点击设置按钮事件
 
     void gameBtnPush();//点击游戏按钮事件
 
@@ -162,6 +162,8 @@ public slots:
     void earChangeSlots(int);
     void timerSlots();
     void haroSizeChangeSlots(int);
+    void hideHaroSlots();
+    void showHaroSlots();
 
 signals:
     void exitSignal();

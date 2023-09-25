@@ -1,5 +1,6 @@
 #include "musicwin.h"
 #include "ui_musicwin.h"
+#include "resources.h"
 
 MusicWin::MusicWin(QWidget *parent) :
     QWidget(parent),
@@ -17,10 +18,19 @@ MusicWin::MusicWin(QWidget *parent) :
     setWindowOpacity(0.95);//设置透明度
     setStyleSheet("background-color:white;");
 
-    Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
-    setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
+    // make window stay on top and hide window frame based on system
+    #ifdef _WIN32
+        // On Windows we need to set Qt::Tool so this app won't show in Windows' taskbar
+        this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    #else
+        // On Linux we need to set Qt::X11BypassWindowManagerHint so this app won't show in taskbar
+        // Note if you want to use this app on wayland, you need to install x11-wayland and set env QT_QPA_PLATFORM="xcb" to force qt use X11 backend
+        this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+    #endif
+    // Qt::WindowFlags m_flags = windowFlags();//保持窗口置顶1
+    // setWindowFlags(m_flags|Qt::WindowStaysOnTopHint);//保持窗口置顶2
 
-    this->setWindowIcon(QIcon(":/images/icon/music.png")); //设置窗口图标
+    this->setWindowIcon(QIcon(HaroIcon::getIcon(HaroIcon::Music))); //设置窗口图标
 
     initBtn();//初始化按钮
     initMedia();//初始化媒体
@@ -45,11 +55,11 @@ void MusicWin::initBtn()
     play = new QPushButton(this);
     add = new QPushButton(this);
     //图标载入
-    next->setIcon(QIcon(":/images/icon/next.png"));
-    last->setIcon(QIcon(":/images/icon/last.png"));
-    pause->setIcon(QIcon(":/images/icon/pause.png"));
-    play->setIcon(QIcon(":/images/icon/play.png"));
-    add->setIcon(QIcon(":/images/icon/add.png"));
+    next->setIcon(QIcon(HaroIcon::getIcon(HaroIcon::Next)));
+    last->setIcon(QIcon(HaroIcon::getIcon(HaroIcon::Last)));
+    pause->setIcon(QIcon(HaroIcon::getIcon(HaroIcon::Pause)));
+    play->setIcon(QIcon(HaroIcon::getIcon(HaroIcon::Play)));
+    add->setIcon(QIcon(HaroIcon::getIcon(HaroIcon::Add)));
 
     //图标大小
     int btnSize = 80;
@@ -151,8 +161,10 @@ void MusicWin::lastBtnPush()
 
 void MusicWin::addBtnPush()
 {
+    // we need to hide Haro temporally so it won't stay on the top of select window
+    emit this->hideHaro();
     //打开文件夹选择音频文件
-    QString curPash = "./music";
+    QString curPash = "./";
     QString dlgTitle="选择音乐";
     QString filter="音频文件(*.mp3 *.wav *.wma)mp3文件(*.mp3);;wav文件(*.wav);;wma文件(*.wma);;所有文件(*.*)";
     QStringList fileListTemp = QFileDialog::getOpenFileNames(this,dlgTitle,curPash,filter);
@@ -181,6 +193,8 @@ void MusicWin::addBtnPush()
         player->play();
     }
 
+    // and bring back haro
+    emit this->showHaro();
 }
 
 void MusicWin::musicChangeEvent()
