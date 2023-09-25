@@ -153,7 +153,7 @@ void Haro::initWindow()
     this->musicWindow = new MusicWin;
     // setting window
     this->setWindow = new SetWin;
-    this->setWindow->setSize(300);
+    this->setWindow->setSize(400);
     // calendar window
     this->calenWindow = new QCalendarWidget;
     this->calenWindow->resize(600,400);
