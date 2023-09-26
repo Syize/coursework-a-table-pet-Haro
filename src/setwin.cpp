@@ -3,6 +3,11 @@
 #include "resources.h"
 #include <QSlider>
 #include <QSpinBox>
+#include <QFileInfo>
+#include <QFileIconProvider>
+#include <QFileSystemModel>
+#include <QCheckBox>
+#include <iostream>
 
 SetWin::SetWin(QWidget *parent) :
     QWidget(parent),
@@ -42,8 +47,11 @@ SetWin::SetWin(QWidget *parent) :
     // bind slot
     QObject::connect(this->ui->haroSizeSlider, &QSlider::valueChanged, this, &SetWin::onSliderValueChanged);
     QObject::connect(this->ui->sliderValueSpinBox, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxValueChanged(int)));
+    QObject::connect(this->ui->changeGameButton, &QPushButton::clicked, this, &SetWin::onChangeGameButtonClicked);
+    QObject::connect(this->ui->hideWhenRunGame, &QCheckBox::stateChanged, this, &SetWin::onHideHaroCheckBoxChanged);
     // QObject::connect(this->ui->sliderValueSpinBox, &QSpinBox::valueChanged, this, &SetWin::onSpinBoxValueChanged);
-
+    // read settings
+    this->settings = new QSettings("Haro", "Haro");
 }
 
 SetWin::~SetWin()
@@ -88,4 +96,58 @@ void SetWin::onSpinBoxValueChanged(int value)
 int SetWin::getSize()
 {
     return this->ui->haroSizeSlider->value();
+}
+
+void SetWin::showEvent(QShowEvent* event)
+{
+    QString gamePath = this->settings->value("Game/File", "").toString();
+    if (gamePath.length() == 0)
+    {
+        // no selected game
+        this->ui->gameIconLabel->setPixmap(QPixmap(QString(HaroIcon::getIcon(HaroIcon::Icon))).scaled(40, 40));
+        this->ui->hideWhenRunGame->setEnabled(false);
+    }
+    else
+    {
+        // get game name
+        QFileInfo gameInfo(gamePath);
+        QString gameName = gameInfo.fileName();
+        // get game icon
+        QFileSystemModel* model = new QFileSystemModel;
+        model->setRootPath(gameInfo.path());
+        QIcon gameIcon = model->iconProvider()->icon(gameInfo);
+        this->ui->gameIconLabel->setPixmap(gameIcon.pixmap(gameIcon.availableSizes().last()).scaled(40, 40));
+        this->ui->gameIconLabel->setToolTip(gameName);
+        this->ui->hideWhenRunGame->setEnabled(true);
+        this->ui->hideWhenRunGame->setChecked(
+            this->settings->value("Game/Hide", true).toBool()
+        );
+    }
+    event->accept();
+}
+
+void SetWin::onChangeGameButtonClicked()
+{
+    // hide haro so it won't stay on the top of select window
+    emit this->hideHaroSignal(1);
+    // get file path
+    QString gamePath = QFileDialog::getOpenFileName(this, tr("Select Program"), "./", tr("Executable(*.exe);;Link(*.lnk);;All(*.*)"));
+    // save settings
+    this->settings->setValue("Game/File", gamePath);
+    this->settings->sync();
+    // show haro
+    emit this->showHaroSignal(1);
+}
+
+void SetWin::onHideHaroCheckBoxChanged(int state)
+{
+    if (state == 0)
+    {
+        this->settings->setValue("Game/Hide", false);
+    }
+    else
+    {
+        this->settings->setValue("Game/Hide", true);
+    }
+    this->settings->sync();
 }

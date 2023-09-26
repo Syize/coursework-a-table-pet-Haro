@@ -162,7 +162,7 @@ void MusicWin::lastBtnPush()
 void MusicWin::addBtnPush()
 {
     // we need to hide Haro temporally so it won't stay on the top of select window
-    emit this->hideHaro();
+    emit this->hideHaroSignal(0);
     //打开文件夹选择音频文件
     QString curPash = "./";
     QString dlgTitle="选择音乐";
@@ -194,7 +194,7 @@ void MusicWin::addBtnPush()
     }
 
     // and bring back haro
-    emit this->showHaro();
+    emit this->showHaroSignal(0);
 }
 
 void MusicWin::musicChangeEvent()

@@ -67,8 +67,8 @@ private:
     void volumeChangeEvent();//调节音量事件
 
 signals:
-    void hideHaro();
-    void showHaro();
+    void hideHaroSignal(int);
+    void showHaroSignal(int);
 };
 
 #endif // MUSICWIN_H

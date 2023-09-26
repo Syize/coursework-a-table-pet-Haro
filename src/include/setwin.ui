@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>207</height>
+    <width>433</width>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,6 +51,79 @@
         <string>Start On Boot</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="gameIconLabel">
+         <property name="minimumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>You haven't selected game yet!</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="changeGameButton">
+         <property name="minimumSize">
+          <size>
+           <width>105</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>105</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Change selected games</string>
+         </property>
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="hideWhenRunGame">
+         <property name="minimumSize">
+          <size>
+           <width>145</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>145</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Hide Haro when running selected games</string>
+         </property>
+         <property name="text">
+          <string>Hide Haro</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">

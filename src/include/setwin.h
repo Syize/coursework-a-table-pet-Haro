@@ -6,6 +6,9 @@
 #include <QPainter>
 #include <QLabel>
 #include <QString>
+#include <QShowEvent>
+#include <QSettings>
+#include <QFileDialog>
 
 namespace Ui {
 class SetWin;
@@ -26,12 +29,21 @@ public:
 private slots:
     void onSliderValueChanged(int value);//滑动条槽函数
     void onSpinBoxValueChanged(int value);
+    void onHideHaroCheckBoxChanged(int);
+
+public slots:
+    void onChangeGameButtonClicked();
 
 private:
     Ui::SetWin *ui;
+    QSettings* settings;
+    // check game whenever show setting window
+    void showEvent(QShowEvent* event);
 
 signals:
     void sliderValueChanged(int);
+    void hideHaroSignal(int);
+    void showHaroSignal(int);
 };
 
 #endif // SETWIN_H

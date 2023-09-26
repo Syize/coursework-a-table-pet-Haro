@@ -100,8 +100,11 @@ void Haro::bindSlots()
     QObject::connect(this->ui->closeButton, &QPushButton::clicked, this, &Haro::onCloseButtonClicked);
     QObject::connect(this->dressWindow, &DressWin::bodyChangeSignal, this, &Haro::bodyChangeSlots);
     QObject::connect(this->dressWindow, &DressWin::earChangeSignal, this, &Haro::earChangeSlots);
-    QObject::connect(this->musicWindow, &MusicWin::hideHaro, this, &Haro::hideHaroSlots);
-    QObject::connect(this->musicWindow, &MusicWin::showHaro, this, &Haro::showHaroSlots);
+    QObject::connect(this->musicWindow, &MusicWin::hideHaroSignal, this, &Haro::hideHaroSlots);
+    QObject::connect(this->musicWindow, &MusicWin::showHaroSignal, this, &Haro::showHaroSlots);
+    QObject::connect(this->setWindow, &SetWin::hideHaroSignal, this, &Haro::hideHaroSlots);
+    QObject::connect(this->setWindow, &SetWin::showHaroSignal, this, &Haro::showHaroSlots);
+    QObject::connect(this, &Haro::changeGameSignal, this->setWindow, &SetWin::onChangeGameButtonClicked);
 }
 
 void Haro::bindTimerSlots()
@@ -204,18 +207,36 @@ void Haro::haroSizeChangeSlots(int size)
     }
 }
 
-void Haro::hideHaroSlots()
+void Haro::hideHaroSlots(int window)
 {
-    // hide music window and haro
-    this->musicWindow->hide();
-    this->hide();
+    if (window == 0)
+    {
+        // hide music window and haro
+        this->musicWindow->hide();
+        this->hide();
+    }
+    else if (window == 1)
+    {
+        // hide setting window and haro
+        this->setWindow->hide();
+        this->hide();
+    }
 }
 
-void Haro::showHaroSlots()
+void Haro::showHaroSlots(int window)
 {
-    // show music window and haro
-    this->show();
-    this->musicWindow->show();
+    if (window == 0)
+    {
+        // show music window and haro
+        this->show();
+        this->musicWindow->show();
+    }
+    else if (window == 1)
+    {
+        // show setting window and haro
+        this->show();
+        this->setWindow->show();
+    }
 }
 
 void Haro::hideOrShowButton()
@@ -332,23 +353,26 @@ void Haro::onMusicButtonClicked()
     }
 }
 
-void Haro::gameBtnPush()
+void Haro::onGameButtonClicked()
 {
-    //隐藏所有窗口
+    // hide all window
     this->hide();
-    setWindow->hide();
-    calenWindow->hide();
-    musicWindow->hide();
-    QDir dir( "./game/Sky_island/Release/Sky_island.exe.lnk");//获取相对路径
-    QString temDir = dir.absolutePath();//通过相对路径获取绝对路径
-    system(temDir.toLatin1());
-
-    //↑通过cmd启动游戏，toLatin1()将QString类型转为char*类型
-    //阻塞式启动，关闭后游戏窗口后才运行下面语段↓
-    //隐藏按钮↓
-    btnSwitch_1=0;
-    btnSwitch_2=0;
-    // btnSwitchRole();
+    this->setWindow->hide();
+    this->calenWindow->hide();
+    this->musicWindow->hide();
+    // read executable or link file from settings
+    QString gamePath = this->settings->value("Game/File", "").toString();
+    if (gamePath.length() == 0)
+    {
+        // no records, select app first
+        gamePath = QFileDialog::getOpenFileName(this, tr("Select Program"), "./", tr("Executable(*.exe);;Link(*.lnk);;All(*.*)"));
+        // save
+        this->settings->setValue("Game/File", gamePath);
+        this->settings->sync();
+    }
+    
+    // run selected app
+    system(gamePath.toLatin1());
 
     this->show();
 }
@@ -376,12 +400,6 @@ void Haro::onSystemTrayIconActivate()
     {
         this->show();
     }
-    else
-    {
-        this->hide();
-    }
-    
-
 }
 
 void Haro::mouseMoveEvent(QMouseEvent *event)
