@@ -20,6 +20,8 @@ public:
     ~SetWin();
 
     void setSize(int);//设置size值
+    // return windows size
+    int getSize();
 
 private slots:
     void onSliderValueChanged(int value);//滑动条槽函数

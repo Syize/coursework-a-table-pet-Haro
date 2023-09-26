@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QBitmap>
 #include <QPainter>
+#include <QSettings>
 
 namespace Ui {
 class DressWin;
@@ -33,6 +34,7 @@ private:
     QLabel *bodyPreviews, *earPreviews, *dummyPreviews;
     QButtonGroup *bodysGroup,*earsGroup;//按钮组
     Ui::DressWin *ui;
+    QSettings* settings;
 };
 
 #endif // DRESSWIN_H

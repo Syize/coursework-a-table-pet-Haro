@@ -84,3 +84,8 @@ void SetWin::onSpinBoxValueChanged(int value)
     this->ui->haroSizeSlider->setValue(value);
     emit this->sliderValueChanged(value);
 }
+
+int SetWin::getSize()
+{
+    return this->ui->haroSizeSlider->value();
+}

@@ -15,6 +15,8 @@
 #include <QCalendarWidget>
 #include <QFile>
 #include <QDataStream>
+#include <QSettings>
+#include <QCloseEvent>
 
 #include <QSystemTrayIcon>
 
@@ -93,8 +95,10 @@ private:
     // for example, if you set it to 50, then the inverval between eye movement picture will be (50 + EYE_MOVE_MAX_COUNT)x10 ms.
     // but please note that it will be reset to 0 after a movemnt finish.
     int customEyeSwitchInterval = 0;
-    // remember body index and ear index
+    // remember body dress index
     int bodyDressIndex = 0;
+    // config file path
+    QSettings* settings;
 
     QSystemTrayIcon* pSystemTray;//系统托盘
 public:
@@ -116,6 +120,8 @@ public:
     void mouseMoveEvent(QMouseEvent *event);//鼠标移动事件-虚函数
 
     void mousePressEvent(QMouseEvent *event);//鼠标点击事件-虚函数
+    // close event
+    void closeEvent(QCloseEvent *event);
 
     void eyesMovementLoad();//眼部动作载入
 

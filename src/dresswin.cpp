@@ -31,6 +31,11 @@ DressWin::DressWin(QWidget *parent)
     this->setWindowIcon(QIcon(QString(HaroIcon::getIcon(HaroIcon::Dress)))); //设置窗口图标
 
     this->initWindow();
+
+    // read settings
+    this->settings = new QSettings("Haro", "Haro");
+    this->bodysGroup->button(this->settings->value("Body", 0).toInt())->setChecked(true);
+    this->earsGroup->button(this->settings->value("Ear", 0).toInt())->setChecked(true);
 }
 
 void DressWin::initWindow()
@@ -144,10 +149,10 @@ void DressWin::initWindow()
 
     //当信号存在重载函数时，需要使用函数指针进行强制类型转换
     connect(bodysGroup,
-            static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::idClicked),
             this,&DressWin::bodyChange);
     connect(earsGroup,
-            static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::idClicked),
             this,&DressWin::earsChange);
 }
 
