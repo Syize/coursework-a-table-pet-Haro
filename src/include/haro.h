@@ -17,6 +17,7 @@
 #include <QDataStream>
 #include <QSettings>
 #include <QCloseEvent>
+#include <QProcess>
 
 #include <QSystemTrayIcon>
 
@@ -77,6 +78,8 @@ private:
     int bodyDressIndex = 0;
     // config file path
     QSettings* settings;
+    // game process
+    QProcess* gameProcess;
 
     // QSystemTrayIcon* pSystemTray;//系统托盘
 public:
@@ -130,6 +133,11 @@ public slots:
     void haroSizeChangeSlots(int);
     void hideHaroSlots(int);
     void showHaroSlots(int);
+
+    // game process slot functios
+    void onGameProcessStartedSlot();
+    void onGameProcessFinishedSlot(int, QProcess::ExitStatus);
+    void onGameProcessErrorOccurredSlot(QProcess::ProcessError);
 
 signals:
     void exitSignal();

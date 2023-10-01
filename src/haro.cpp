@@ -38,8 +38,6 @@ Haro::Haro(QWidget *parent)
     // init windows
     this->initWindow();
 
-    // bind slots to signals
-    this->bindSlots();
     // init timer
     this->timer = new QTimer(this);
     this->bindTimerSlots();
@@ -49,6 +47,12 @@ Haro::Haro(QWidget *parent)
     int X = this->settings->value("Coordinates/X", 100).toInt();
     int Y = this->settings->value("Coordinates/Y", 100).toInt();
     this->move(X, Y);
+
+    // init game process
+    this->gameProcess = new QProcess(this);
+
+    // bind slots to signals
+    this->bindSlots();
 }
 
 Haro::~Haro()
@@ -90,6 +94,7 @@ void Haro::initWindow()
 
 void Haro::bindSlots()
 {
+    QObject::connect(this->ui->gameButton, &QPushButton::clicked, this, &Haro::onGameButtonClicked);
     QObject::connect(this->ui->musicButton, &QPushButton::clicked, this, &Haro::onMusicButtonClicked);
     QObject::connect(this->setWindow, &SetWin::sliderValueChanged, this, &Haro::haroSizeChangeSlots);
     QObject::connect(this->ui->settingButton, &QPushButton::clicked, this, &Haro::onSettingButtonClicked);
@@ -105,6 +110,10 @@ void Haro::bindSlots()
     QObject::connect(this->setWindow, &SetWin::hideHaroSignal, this, &Haro::hideHaroSlots);
     QObject::connect(this->setWindow, &SetWin::showHaroSignal, this, &Haro::showHaroSlots);
     QObject::connect(this, &Haro::changeGameSignal, this->setWindow, &SetWin::onChangeGameButtonClicked);
+    QObject::connect(this->gameProcess, &QProcess::started, this, &Haro::onGameProcessStartedSlot);
+    QObject::connect(this->gameProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
+                     this, SLOT(onGameProcessFinishedSlot(int, QProcess::ExitStatus)));
+    QObject::connect(this->gameProcess, &QProcess::errorOccurred, this, &Haro::onGameProcessErrorOccurredSlot);
 }
 
 void Haro::bindTimerSlots()
@@ -239,6 +248,34 @@ void Haro::showHaroSlots(int window)
     }
 }
 
+void Haro::onGameProcessStartedSlot()
+{
+    // std::cout << "Game started" << std::endl;
+    // hide haro
+    if (this->settings->value("Game/Hide", true).toBool())
+    {
+        // hide all window
+        this->dressWindow->hide();
+        this->setWindow->hide();
+        this->musicWindow->hide();
+        this->calenWindow->hide();
+        this->hide();
+    }
+}
+
+void Haro::onGameProcessFinishedSlot(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    // std::cout << "Game exit with code: " << exitCode << std::endl;
+    // std::cout << "Exit status: " << exitStatus << std::endl;
+    this->show();
+}
+
+void Haro::onGameProcessErrorOccurredSlot(QProcess::ProcessError error)
+{
+    // std::cout << "Error occurred: " << error << std::endl;
+    this->show();
+}
+
 void Haro::hideOrShowButton()
 {
     this->ui->closeButton->setVisible(this->basicButtonSwitch);
@@ -356,25 +393,27 @@ void Haro::onMusicButtonClicked()
 void Haro::onGameButtonClicked()
 {
     // hide all window
-    this->hide();
-    this->setWindow->hide();
-    this->calenWindow->hide();
-    this->musicWindow->hide();
+    // this->hide();
+    // this->setWindow->hide();
+    // this->calenWindow->hide();
+    // this->musicWindow->hide();
     // read executable or link file from settings
     QString gamePath = this->settings->value("Game/File", "").toString();
     if (gamePath.length() == 0)
     {
         // no records, select app first
-        gamePath = QFileDialog::getOpenFileName(this, tr("Select Program"), "./", tr("Executable(*.exe);;Link(*.lnk);;All(*.*)"));
+        gamePath = QFileDialog::getOpenFileName(this, tr("Select Program"), "./", tr("Executable(*.exe);;Link(*.lnk);;All(*)"));
         // save
         this->settings->setValue("Game/File", gamePath);
         this->settings->sync();
     }
     
     // run selected app
-    system(gamePath.toLatin1());
+    // system(gamePath.toLatin1());
+    this->gameProcess->setProgram(gamePath);
+    this->gameProcess->start();
 
-    this->show();
+    // this->show();
 }
 
 void Haro::onCalendarButtonClicked()
