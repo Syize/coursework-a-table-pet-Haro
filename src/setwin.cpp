@@ -173,8 +173,9 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
         #ifdef _WIN32
             // remove regster
             QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-            QString app_path = QApplication::applicationFilePath();
             bootUpSettings.remove("Haro");
+            // save to settings
+            this->settings->setValue("AutoStart", false);
         #else
             // remove auto start desktop from $HOME/.config/autostart
             // get home path
@@ -207,6 +208,8 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
             QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
             QString app_path = QApplication::applicationFilePath();
             bootUpSettings.setValue("Haro", app_path);
+            // save to settings
+            this->settings->setValue("AutoStart", true);
         #else
             // put desktop file in $HOME/.config/autostart
             // get home path
