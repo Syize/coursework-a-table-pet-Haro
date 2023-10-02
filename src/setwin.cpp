@@ -171,7 +171,10 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
     {
         // remove auto start entry based on plantform
         #ifdef _WIN32
-            // haven't work out on Windows
+            // remove regster
+            QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+            QString app_path = QApplication::applicationFilePath();
+            bootUpSettings.remove("Haro");
         #else
             // remove auto start desktop from $HOME/.config/autostart
             // get home path
@@ -200,7 +203,10 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
     {
         // add auto start entry based on plantform
         #ifdef _WIN32
-            // haven't work out on Windows
+            // register
+            QSettings bootUpSettings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+            QString app_path = QApplication::applicationFilePath();
+            bootUpSettings.setValue("Haro", app_path);
         #else
             // put desktop file in $HOME/.config/autostart
             // get home path
@@ -237,13 +243,7 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
                 // move desktop file to autostart dir
                 autoStartDesktopTemp.rename(autoStartDesktopDesPath);
                 // save to settings
-                this->settings->setValue("AutoStart", true);
-
-                // this->settingProcess->setProgram(QString("touch"));
-                // QStringList arguments;
-                // arguments << "/tmp/test";
-                // this->settingProcess->setArguments(arguments);
-                // this->settingProcess->start();   
+                this->settings->setValue("AutoStart", true); 
             }
         #endif
     }
