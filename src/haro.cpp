@@ -467,6 +467,11 @@ void Haro::mousePressEvent(QMouseEvent *event)
         this->basicButtonSwitch = 0;
         this->moreButtonSwith = 0;
         this->hideOrShowButton();
+        // move other window
+        this->dressWindow->move(this->x() - 470 + 180, this->y());
+        this->calenWindow->move(this->x() - 600 + 180, this->y());
+        this->setWindow->move(this->x() - this->setWindow->width() + 180, this->y());
+        this->musicWindow->move(this->x() - this->musicWindow->width() + 180, this->y());
         // hide other window
         this->errorMovemntTriggerCount ++;
         if (this->errorMovemntTriggerCount >= ERROR_MOVEMENT_TRIGGER_COUNT)

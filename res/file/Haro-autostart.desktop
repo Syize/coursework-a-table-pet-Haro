@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Haro
+Comment=Haro, a cute desktop pet
+Exec=/bin/bash -c "sleep 10 && export QT_QPA_PLATFORM=xcb && {HARO_PATH}"
+Terminal=false
+Type=Application
+Categories=Game;

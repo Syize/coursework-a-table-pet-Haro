@@ -51,6 +51,7 @@
         <file>res/images/icon/pause.png</file>
         <file>res/images/icon/play.png</file>
         <file>res/images/icon/setting.png</file>
+        <file>res/images/icon/haro.png</file>
     </qresource>
     <qresource prefix="/blink">
         <file>res/images/movement/blink/1.png</file>
@@ -242,5 +243,8 @@
         <file>res/images/movement/wink/15.png</file>
         <file>res/images/movement/wink/16.png</file>
         <file>res/images/movement/wink/17.png</file>
+    </qresource>
+    <qresource prefix="/file">
+        <file>res/file/Haro-autostart.desktop</file>
     </qresource>
 </RCC>

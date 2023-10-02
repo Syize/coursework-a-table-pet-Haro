@@ -30,6 +30,7 @@ private slots:
     void onSliderValueChanged(int value);//滑动条槽函数
     void onSpinBoxValueChanged(int value);
     void onHideHaroCheckBoxChanged(int);
+    void onBootOnStartCheckBoxChanged(int);
 
 public slots:
     void onChangeGameButtonClicked();
