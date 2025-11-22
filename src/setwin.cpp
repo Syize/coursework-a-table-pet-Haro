@@ -199,6 +199,7 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
                 }
             }
         #endif
+        emit this->sendNotificationSignal(QString("Auto start is disable"));
     }
     else
     {
@@ -249,5 +250,6 @@ void SetWin::onBootOnStartCheckBoxChanged(int state)
                 this->settings->setValue("AutoStart", true); 
             }
         #endif
+        emit this->sendNotificationSignal(QString("Auto start is enable"));
     }
 }

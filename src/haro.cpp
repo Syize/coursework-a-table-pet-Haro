@@ -3,6 +3,7 @@
 #include "ui_haro.h"
 #include <iostream>
 #include <QApplication>
+#include <QDir>
 
 Haro::Haro(QWidget *parent)
     : QMainWindow(parent)
@@ -53,6 +54,9 @@ Haro::Haro(QWidget *parent)
 
     // bind slots to signals
     this->bindSlots();
+
+    // run notfy thread
+    this->notifyThread->start();
 }
 
 Haro::~Haro()
@@ -90,6 +94,20 @@ void Haro::initWindow()
 
     // hide button
     this->hideOrShowButton();
+
+    // init other settings
+    // create /tmp/Haro on linux
+    #ifdef __linux__
+        QDir tmpHaro(QString("/tmp/Haro"));
+        if (! tmpHaro.exists())
+        {
+            tmpHaro.mkdir(QString("/tmp/Haro"));
+        }
+    #endif
+    // init notify and thread
+    this->notifyWorker = new Notify;
+    this->notifyThread = new QThread;
+    this->notifyWorker->moveToThread(this->notifyThread);
 }
 
 void Haro::bindSlots()
@@ -114,6 +132,8 @@ void Haro::bindSlots()
     QObject::connect(this->gameProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(onGameProcessFinishedSlot(int, QProcess::ExitStatus)));
     QObject::connect(this->gameProcess, &QProcess::errorOccurred, this, &Haro::onGameProcessErrorOccurredSlot);
+    // notification
+    QObject::connect(this->setWindow, &SetWin::sendNotificationSignal, this->notifyWorker, &Notify::sendNotificationSlot);
 }
 
 void Haro::bindTimerSlots()

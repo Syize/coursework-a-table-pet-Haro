@@ -18,12 +18,14 @@
 #include <QSettings>
 #include <QCloseEvent>
 #include <QProcess>
+#include <QThread>
 
 #include <QSystemTrayIcon>
 
 #include "dresswin.h"
 #include "setwin.h"
 #include "musicwin.h"
+#include "notify.h"
 
 using namespace std;
 
@@ -95,6 +97,10 @@ public:
     void hideOrShowButton();
     // timer
     QTimer* timer;
+    // notify thread
+    QThread* notifyThread;
+    // notify instance
+    Notify* notifyWorker;
     // ear movement
     void earsMovement();
 

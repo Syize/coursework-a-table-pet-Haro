@@ -45,6 +45,7 @@ signals:
     void sliderValueChanged(int);
     void hideHaroSignal(int);
     void showHaroSignal(int);
+    void sendNotificationSignal(QString);
 };
 
 #endif // SETWIN_H

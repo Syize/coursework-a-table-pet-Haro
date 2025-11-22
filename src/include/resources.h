@@ -101,7 +101,8 @@ namespace HaroIcon
         Next,
         Pause,
         Play,
-        Setting
+        Setting,
+        IconPNG,
     };
 
     char* getIcon(IconName index);

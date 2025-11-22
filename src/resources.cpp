@@ -182,6 +182,8 @@ char* HaroIcon::getIcon(HaroIcon::IconName index)
         return ":/icon/res/images/icon/play.png";
     case Setting:
         return ":/icon/res/images/icon/setting.png";
+    case IconPNG:
+        return ":/icon/res/images/icon/haro.png";
     
     default:
         throw "Invalid index";

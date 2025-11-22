@@ -24,6 +24,10 @@ SystemTray::SystemTray(QApplication *parent)
     this->setContextMenu(this->menu);
 
     this->show();
+
+    // test message
+    QIcon icon(QString("/tmp/Haro/Haro.png"));
+    this->showMessage(QString("Haro"), QString("Hello, Haro!"), icon);
 }
 
 void SystemTray::exitSlots()
